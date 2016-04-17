@@ -21,6 +21,4 @@ echo "Creating $RECIPE"
 cp -R recipes/recipe-template $RECIPE
 
 echo "Adding link to bottom of README (remember to move that into place)"
-echo "- [$2](recipes/$1)"
-
-
+echo "- [$2](recipes/$1)" >> README.md
