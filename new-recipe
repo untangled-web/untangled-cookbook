@@ -1,0 +1,26 @@
+#!/bin/bash
+
+if [[ $BASH_ARGC != 2 ]]; then
+   echo "Usage: $0 recipe-directory-name description"
+   exit 1
+fi
+
+if [ -d "$1" ]; then
+   echo "$1 already exists"
+   exit 2
+fi
+
+if [[ ! -d recipes ]]; then
+   echo "Please run this command from the top directory of the cookbook repository"
+   exit 3
+fi
+
+RECIPE=recipes/$1
+
+echo "Creating $RECIPE"
+cp -R recipes/recipe-template $RECIPE
+
+echo "Adding link to bottom of README (remember to move that into place)"
+echo "- [$2](recipes/$1)"
+
+
