@@ -13,7 +13,7 @@ Each of them is set up for use in IntelliJ, emacs, or vim. They can also be star
 ## UI
 
 - Build a multi-use dialog
-- Create a tabbed interface
+- [Create a tabbed interface](recipes/tabbed-interface)
 - Validate forms against the server in real-time
 - Hook up HTML5 routing
 - Update the UI on a time schedule
