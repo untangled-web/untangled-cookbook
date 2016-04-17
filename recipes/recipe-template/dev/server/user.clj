@@ -3,23 +3,17 @@
     [clojure.pprint :refer (pprint)]
     [clojure.stacktrace :refer (print-stack-trace)]
     [clojure.tools.namespace.repl :refer [disable-reload! refresh clear set-refresh-dirs]]
-    [clojure.tools.nrepl.server :as nrepl]
     [com.stuartsierra.component :as component]
-    [datomic-helpers :refer [to-transaction to-schema-transaction ext]]
-    [datomic.api :as d]
-    [environ.core :refer [env]]
-    [taoensso.timbre :refer [info set-level!]]
-    [untangled.datomic.schema :refer [dump-schema dump-entity]]
-    [clojure.java.io :as io]
+    [juxt.dirwatch :as dw]
     [figwheel-sidecar.repl-api :as ra]
-    [app.system :as sys]))
+    [app.system :as sys]
+    [taoensso.timbre :as timbre]))
 
 ;;FIGWHEEL
 
 (def figwheel-config
-  {:figwheel-options {:css-dirs ["resources/public/css"]
-                      :open-file-command "/Users/tonykay/projects/team/scripts/figwheel-intellij.sh"}
-   :build-ids        ["dev" "test" "cards"]
+  {:figwheel-options {:css-dirs ["resources/public/css"]}
+   :build-ids        ["dev"]
    :all-builds       (figwheel-sidecar.repl/get-project-cljs-builds)})
 
 (defn start-figwheel
@@ -35,13 +29,9 @@
      (ra/start-figwheel! (assoc figwheel-config :build-ids build-ids))
      (ra/cljs-repl))))
 
-;;SERVER
-
-(set-refresh-dirs "dev/server" "src/server" "src/shared" "specs/server" "specs/shared")
+(set-refresh-dirs "src/server")
 
 (defonce system (atom nil))
-
-(set-level! :info)
 
 (defn init
   "Create a web server from configurations. Use `start` to start it."
@@ -49,9 +39,11 @@
   (reset! system (sys/make-system)))
 
 (defn start "Start (an already initialized) web server." [] (swap! system component/start))
+
 (defn stop "Stop the running web server." []
-  (swap! system component/stop)
-  (reset! system nil))
+  (when @system
+    (swap! system component/stop)
+    (reset! system nil)))
 
 (defn go "Load the overall web server system and start it." []
   (init)
@@ -63,3 +55,18 @@
   (stop)
   (refresh :after 'user/go))
 
+(defonce watcher (atom nil))
+
+(defn start-watching []
+  (if-not @watcher
+    (reset! watcher
+            (dw/watch-dir (fn [{file :file}]
+                            (let [file-name (.getName file)]
+                              (when (re-matches #".*\.clj$" file-name)
+                                (timbre/info "Reload triggered by: " file-name)
+                                (with-bindings {#'*ns* *ns*}
+                                  (reset)))))
+                          (clojure.java.io/file "src/server")))))
+
+(defn stop-watching []
+  (swap! watcher dw/close-watcher))

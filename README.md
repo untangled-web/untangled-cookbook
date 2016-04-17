@@ -6,7 +6,7 @@ Untangled Web Framework.
 The recipes themselves are in the `recipes` subdirectory, and each has a recipe `README.md`. This document
 acts as an index of them.
 
-Each of them is set up for use in IntelliJ, emacs, or vim. They can be started from a plain command line.
+Each of them is set up for use in IntelliJ, emacs, or vim. They can also be started from a plain command line.
 
 # Recipes
 

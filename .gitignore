@@ -1,5 +1,7 @@
+*.log
+.lein-env
 *.sw?
 *.iml
 .idea
 target
-resources/public/js
+compiled

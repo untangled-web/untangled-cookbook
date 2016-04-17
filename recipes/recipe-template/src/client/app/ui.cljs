@@ -11,5 +11,4 @@
   Object
   (render [this]
     (let [{:keys [ui/react-key] :or {ui/react-key "ROOT"} :as props} (om/props this)]
-      (dom/div #js {:key react-key}
-          "TODO"))))
+      (dom/div #js {:key react-key} "TODO"))))

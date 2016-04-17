@@ -9,11 +9,12 @@
                  [commons-codec "1.10"]
                  [org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.228"]
-                 [org.omcljs/om "1.0.0-alpha31" :exclusions [cljsjs/react]]
+                 [org.omcljs/om "1.0.0-alpha31"]
                  [binaryage/devtools "0.5.2"  :exclusions [environ]]
                  [figwheel-sidecar "0.5.0-3" :exclusions [ring/ring-core joda-time org.clojure/tools.reader]]
                  [com.cemerick/piggieback "0.2.1"]
                  [org.clojure/tools.nrepl "0.2.12"]
+                 [juxt/dirwatch "0.2.3"]
                  [navis/untangled-client "0.4.6" :exclusions [cljsjs/react org.omcljs/om]]
                  [navis/untangled-server "0.4.5"]
                  [navis/untangled-datomic "0.4.4" :exclusions [com.datomic/datomic-free org.clojure/tools.cli]]]
@@ -22,7 +23,7 @@
 
   :source-paths ["dev/server" "src/server"]
   :jvm-opts ["-server" "-Xmx1024m" "-Xms512m" "-XX:-OmitStackTraceInFastThrow"]
-  :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"]
+  :clean-targets ^{:protect false} ["resources/public/js" "target"]
 
   :cljsbuild {:builds
               [{:id           "dev"
