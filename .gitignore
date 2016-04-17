@@ -1,0 +1,5 @@
+*.sw?
+*.iml
+.idea
+target
+resources/public/js
