@@ -5,10 +5,16 @@
             yahoo.intl-messageformat-with-locales
             [untangled.client.data-fetch :as df]))
 
+(defui ^:once Child
+  Object
+  (render [this] (dom/p nil "TODO")))
+
+(def ui-child (om/factory Child))
+
 (defui ^:once Root
   static om/IQuery
   (query [this] [:ui/react-key])
   Object
   (render [this]
     (let [{:keys [ui/react-key] :or {ui/react-key "ROOT"} :as props} (om/props this)]
-      (dom/div #js {:key react-key} "TODO"))))
+      (dom/div #js {:key react-key} (ui-child)))))

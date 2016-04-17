@@ -37,8 +37,7 @@
                                :parallel-build       false
                                :verbose              false
                                :recompile-dependents true
-                               :source-map-timestamp true}}
-               ]}
+                               :source-map-timestamp true}}]}
 
   :figwheel {:css-dirs ["resources/public/css"]}
 
