@@ -8,7 +8,7 @@ acts as an index of them.
 
 Each of them is set up for use in IntelliJ, emacs, or vim. They can also be started from a plain command line.
 
-[PLEASE ADD/VOTE FOR ADDITIONS](https://github.com/untangled-web/untangled-cookbook/wiki)
+[PLEASE ADD/VOTE FOR THE TOPICS BELOW VIA THIS LINK](https://github.com/untangled-web/untangled-cookbook/wiki)
 
 # Recipes
 
