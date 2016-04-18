@@ -6,6 +6,10 @@
 (defmulti apimutate om/dispatch)
 (defmulti api-read om/dispatch)
 
+(defmethod apimutate 'my/mutation [env k params]
+  ;; Throw an error for the client to handle
+  {:action (fn [] (throw (ex-info "Server error" {:status 401 :body "Unauthorized User"})))})
+
 (defmethod apimutate :default [e k p]
   (timbre/error "Unrecognized mutation " k))
 
