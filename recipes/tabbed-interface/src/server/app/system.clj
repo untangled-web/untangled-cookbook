@@ -11,7 +11,7 @@
   (api/apimutate env k params))
 
 (defn logging-query [{:keys [ast] :as env} k params]
-  (timbre/info "Query: " (op/ast->expr ast))
+  (timbre/info "The query: " (op/ast->expr ast))
   (api/api-read env k params))
 
 (defn make-system []

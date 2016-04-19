@@ -13,4 +13,4 @@
     (timbre/error "Unrecognized query on dispatch key " dispatch-key (op/ast->expr ast)))
 
 (defmethod api-read :tab-data-query [env dispatch-key params]
-  {:value {:text "Value from SERVEr"}})
+  {:value {:text "This is a value from the server"}})

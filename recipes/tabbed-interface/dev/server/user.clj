@@ -29,7 +29,7 @@
      (ra/start-figwheel! (assoc figwheel-config :build-ids build-ids))
      (ra/cljs-repl))))
 
-(set-refresh-dirs "src/server")
+(set-refresh-dirs "src/server" "dev/server")
 
 (defonce system (atom nil))
 
@@ -54,19 +54,3 @@
   []
   (stop)
   (refresh :after 'user/go))
-
-(defonce watcher (atom nil))
-
-(defn start-watching []
-  (if-not @watcher
-    (reset! watcher
-            (dw/watch-dir (fn [{file :file}]
-                            (let [file-name (.getName file)]
-                              (when (re-matches #".*\.clj$" file-name)
-                                (timbre/info "Reload triggered by: " file-name)
-                                (with-bindings {#'*ns* *ns*}
-                                  (reset)))))
-                          (clojure.java.io/file "src/server")))))
-
-(defn stop-watching []
-  (swap! watcher dw/close-watcher))

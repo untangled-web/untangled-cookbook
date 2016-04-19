@@ -4,7 +4,6 @@
     [clojure.stacktrace :refer (print-stack-trace)]
     [clojure.tools.namespace.repl :refer [disable-reload! refresh clear set-refresh-dirs]]
     [com.stuartsierra.component :as component]
-    [juxt.dirwatch :as dw]
     [figwheel-sidecar.repl-api :as ra]
     [app.system :as sys]
     [taoensso.timbre :as timbre]))
@@ -54,19 +53,3 @@
   []
   (stop)
   (refresh :after 'user/go))
-
-(defonce watcher (atom nil))
-
-(defn start-watching []
-  (if-not @watcher
-    (reset! watcher
-            (dw/watch-dir (fn [{file :file}]
-                            (let [file-name (.getName file)]
-                              (when (re-matches #".*\.clj$" file-name)
-                                (timbre/info "Reload triggered by: " file-name)
-                                (with-bindings {#'*ns* *ns*}
-                                  (reset)))))
-                          (clojure.java.io/file "src/server")))))
-
-(defn stop-watching []
-  (swap! watcher dw/close-watcher))
