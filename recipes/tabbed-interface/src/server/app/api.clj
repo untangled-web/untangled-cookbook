@@ -10,4 +10,7 @@
   (timbre/error "Unrecognized mutation " k))
 
 (defmethod api-read :default [{:keys [ast query] :as env} dispatch-key params]
-    (timbre/error "Unrecognized query " (op/ast->expr ast)))
+    (timbre/error "Unrecognized query on dispatch key " dispatch-key (op/ast->expr ast)))
+
+(defmethod api-read :tab-data-query [env dispatch-key params]
+  {:value {:text "Value from SERVEr"}})

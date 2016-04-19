@@ -7,11 +7,13 @@
 
 (defui ^:once SettingsTab
   static om/IQuery
-  (query [this] [:which-tab :settings-content])
+  (query [this] [:which-tab :settings-content {[:tab-data-query '_] [:text]}])
   Object
   (render [this]
-    (let [{:keys [settings-content]} (om/props this)]
-      (dom/div nil settings-content))))
+    (let [{:keys [settings-content tab-data-query]} (om/props this)]
+      (dom/div nil
+               settings-content
+               (dom/p nil (:text tab-data-query))))))
 
 (def ui-settings-tab (om/factory SettingsTab))
 

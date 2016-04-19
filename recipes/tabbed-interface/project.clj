@@ -10,7 +10,7 @@
                  [org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.228"]
                  [org.omcljs/om "1.0.0-alpha31"]
-                 [binaryage/devtools "0.5.2"  :exclusions [environ]]
+                 [binaryage/devtools "0.5.2" :exclusions [environ]]
                  [figwheel-sidecar "0.5.0-3" :exclusions [ring/ring-core joda-time org.clojure/tools.reader]]
                  [com.cemerick/piggieback "0.2.1"]
                  [org.clojure/tools.nrepl "0.2.12"]
@@ -43,4 +43,4 @@
 
   :repl-options {:init-ns          user
                  :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
-)
+  )
