@@ -70,6 +70,7 @@ You should now be able to see the app at: http://localhost:8080.
 
 ## Server-side
 
+- [Server-side security for UI-generated queries](recipes/server-query-security)
 - Create and integrate a custom server component
 - Add a Server Route that generates an image.
 - Interface with SQL on the server
