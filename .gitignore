@@ -1,3 +1,4 @@
+checkouts
 *.log
 .lein-env
 *.sw?
