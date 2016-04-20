@@ -4,7 +4,7 @@
     [untangled.client.core :as uc]
     [untangled.i18n :refer-macros [tr trf]]
     [untangled.client.data-fetch :as df]
-    [om.next :as om]))
+    [untangled.client.logging :as log]))
 
 (def initial-state {:ui/react-key "abc"})
 
@@ -12,6 +12,12 @@
                      :initial-state initial-state
                      :started-callback
                      (fn [{:keys [reconciler]}]
-                       ; TODO
-                       ))))
+                       ;; specify a fallback mutation symbol as a named parameter after the component or reconciler and query
+                       (df/load-data reconciler [:data]
+                         :fallback 'read/error-log))
+
+                     ;; this function is called on *every* network error, regardless of cause
+                     :network-error-callback
+                     (fn [state error]
+                       (log/warn "Global callback:" error)))))
 

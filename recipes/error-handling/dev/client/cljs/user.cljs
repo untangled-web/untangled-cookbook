@@ -14,7 +14,7 @@
 (devtools/install!)
 
 ; Mount the app and remember it.
-(reset! app (core/mount @app ui/Root "app"))
+(swap! app core/mount ui/Root "app")
 
 ; use this from REPL to view bits of the application db
 (defn log-app-state
