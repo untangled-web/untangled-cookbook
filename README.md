@@ -10,12 +10,36 @@ Each of them is set up for use in IntelliJ, emacs, or vim. They can also be star
 
 [PLEASE ADD/VOTE FOR THE TOPICS BELOW VIA THIS LINK](https://github.com/untangled-web/untangled-cookbook/wiki)
 
+# Running Recipes
+
+Each recipe has a project file. You can run them in the environment of your choice. The basic idea is to use a 
+plain clojure main REPL for figwheel, and any kind of REPL for the server. The servers in the full-stack recipes
+are pre-configured to appear at port 8080. No need to create a config file separately.
+
+## Running Figwheel:
+
+```
+lein run -m clojure.main script/figwheel.clj
+```
+
+If the recipe has only a UI, then browse to: http://localhost:3449. If
+the recipe is full-stack, continue to the next section.
+
+## Running the server:
+
+```
+lein run -m clojure.main
+user> (go)
+```
+
+You should now be able to see the app at: http://localhost:8080.
+
 # Recipes
 
 ## UI
 
 - Build a multi-use dialog
-- [Create a tabbed interface](recipes/tabbed-interface)
+- [Create a tabbed interface. Includes how to lazy-load initial tab content](recipes/tabbed-interface)
 - Validate forms against the server in real-time
 - Hook up HTML5 routing
 - Update the UI on a time schedule
