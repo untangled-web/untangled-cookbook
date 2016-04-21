@@ -7,7 +7,7 @@
 
 (defn keywords-in-query
   "Returns all of the keywords in the given (arbitrarily nested) query."
-  [query] (s/select (s/walker keyword?) query))
+  [query] (set (s/select (s/walker keyword?) query)))
 
 ; TODO: determine if the user is allowed to start at the given keyword for entity with given ID
 (defn authorized-root-entity?
@@ -21,6 +21,6 @@
   "Returns true if the given query is ok with respect to the top-level key of the API query (which should have already
   been authorized by `authorized-root-entity?`."
   [query top-key]
-  (let [keywords-allowed (get top-key whitelist #{})
+  (let [keywords-allowed (get whitelist top-key #{})
         insecure-keywords (set/difference (keywords-in-query query) keywords-allowed)]
     (empty? insecure-keywords)))

@@ -8,7 +8,7 @@
 
 (defui ^:once Person
   static om/IQuery
-  (query [this] [:name :address :cc-number])
+  (query [this] [:ui/fetch-state :name :address :cc-number])
   Object
   (render [this]
     (let [{:keys [name address cc-number]} (om/props this)]
@@ -31,4 +31,4 @@
           (dom/p nil (pr-str "SERVER ERROR: " server-error)))
         (dom/button #js {:onClick #(df/load-data this [{:person (om/get-query Person)}])} "Query for person with credit card")
         (dom/button #js {:onClick #(df/load-data this [{:person (om/get-query Person)}] :without #{:cc-number})} "Query for person WITHOUT credit card")
-        (ui-person person)))))
+        (df/lazily-loaded ui-person person)))))
