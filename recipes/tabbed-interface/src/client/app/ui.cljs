@@ -15,8 +15,8 @@
   (render [this]
     (let [{:keys [settings-content tab-data-query]} (om/props this)]
       (dom/div nil
-               settings-content
-               (dom/p nil (:text tab-data-query))))))
+        settings-content
+        (dom/p nil (:text tab-data-query))))))
 
 (def ui-settings-tab (om/factory SettingsTab))
 
@@ -46,10 +46,10 @@
   (render [this]
     (let [{:keys [which-tab] :as props} (om/props this)]
       (dom/div nil
-               (case which-tab
-                 :main (ui-main-tab props)
-                 :settings (ui-settings-tab props)
-                 (dom/p nil "Missing tab!"))))))
+        (case which-tab
+          :main (ui-main-tab props)
+          :settings (ui-settings-tab props)
+          (dom/p nil "Missing tab!"))))))
 
 (def ui-tabs (om/factory TabUnion))
 
@@ -60,11 +60,11 @@
   (render [this]
     (let [{:keys [ui/react-key current-tab] :or {ui/react-key "ROOT"} :as props} (om/props this)]
       (dom/div #js {:key react-key}
-               ; The selection of tabs can be rendered in a child, but the transact! must be done from the parent (to
-               ; ensure proper re-render of the tab body). See om/computed for passing callbacks.
-               (dom/ul nil
-                       (dom/li #js {:onClick #(om/transact! this '[(app/choose-tab {:tab :main})])} "Main")
-                       (dom/li #js {:onClick #(om/transact! this '[(app/choose-tab {:tab :settings})
-                                                                   ; extra mutation: sample of what you would do to lazy load the tab content
-                                                                   (app/lazy-load-tab {:tab :settings})])} "Settings"))
-               (ui-tabs current-tab)))))
+        ; The selection of tabs can be rendered in a child, but the transact! must be done from the parent (to
+        ; ensure proper re-render of the tab body). See om/computed for passing callbacks.
+        (dom/ul nil
+          (dom/li #js {:onClick #(om/transact! this '[(app/choose-tab {:tab :main})])} "Main")
+          (dom/li #js {:onClick #(om/transact! this '[(app/choose-tab {:tab :settings})
+                                                      ; extra mutation: sample of what you would do to lazy load the tab content
+                                                      (app/lazy-load-tab {:tab :settings})])} "Settings"))
+        (ui-tabs current-tab)))))
