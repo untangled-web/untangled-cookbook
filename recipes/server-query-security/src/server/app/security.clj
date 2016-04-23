@@ -15,7 +15,7 @@
   query keyword and entity ID.
 
   TODO: Implement some logic here."
-  [user keyword id] true)
+  [user keyword id] (= "Tony" (:username user)))
 
 (defn authorized-query?
   "Returns true if the given query is ok with respect to the top-level key of the API query (which should have already

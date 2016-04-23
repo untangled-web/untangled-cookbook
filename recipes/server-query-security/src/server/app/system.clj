@@ -1,6 +1,7 @@
 (ns app.system
   (:require
     [untangled.server.core :as core]
+    [app.authentication :as auth]
     [app.api :as api]
     [om.next.server :as om]
     [taoensso.timbre :as timbre]
@@ -18,5 +19,10 @@
   (core/make-untangled-server
     :config-path "config/recipe.edn"
     :parser (om/parser {:read logging-query :mutate logging-mutate})
-    :parser-injections #{}
-    :components {}))
+    ; Inject the authentication bit
+    :parser-injections #{:authentication}
+    :components {
+                 ; The auth hook puts itself into the Ring pipeline
+                 :auth-hook      (auth/make-authentication)
+                 ; The authentication bit is for checking reads
+                 :authentication (auth/make-authorizer)}))
