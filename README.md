@@ -66,6 +66,7 @@ You should now be able to see the app at: http://localhost:8080.
 
 ## Server push
 
+- [Using websockets for all network traffic](recipes/websockets)
 - Replace the Untangled transit-based networking layer with Sente
 - Push live data updates from the server with Sente
 
