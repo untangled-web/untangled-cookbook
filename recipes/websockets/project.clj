@@ -11,23 +11,32 @@
                  [org.clojure/clojurescript "1.7.228"]
                  [org.omcljs/om "1.0.0-alpha32"]
                  [binaryage/devtools "0.5.2" :exclusions [environ]]
-                 [figwheel-sidecar "0.5.0-3" :exclusions [ring/ring-core joda-time org.clojure/tools.reader]]
+                 [figwheel-sidecar "0.5.2" :exclusions [ring/ring-core joda-time org.clojure/tools.reader]]
                  [com.cemerick/piggieback "0.2.1"]
                  [org.clojure/tools.nrepl "0.2.12"]
                  [juxt/dirwatch "0.2.3"]
                  [navis/untangled-client "0.4.8" :exclusions [cljsjs/react org.omcljs/om]]
                  [navis/untangled-server "0.4.5"]
-                 [navis/untangled-datomic "0.4.8" :exclusions [com.datomic/datomic-free org.clojure/tools.cli]]]
+                 [navis/untangled-datomic "0.4.8" :exclusions [com.datomic/datomic-free org.clojure/tools.cli]]
+
+                 [org.clojure/core.async "0.2.374"]
+                 [com.taoensso/sente "1.8.1"]
+
+
+                 ;; checkouts related - no need to commit.
+                 [clj-http "3.0.1"]
+                 [clj-jwt "0.1.1"]
+                 [navis/untangled-spec "0.3.5"]]
 
   :plugins [[lein-cljsbuild "1.1.2"] [lein-environ "1.0.0"]]
 
-  :source-paths ["dev/server" "src/server"]
+  :source-paths ["dev/server" "src/server" "checkouts/untangled-server/src"]
   :jvm-opts ["-server" "-Xmx1024m" "-Xms512m" "-XX:-OmitStackTraceInFastThrow"]
   :clean-targets ^{:protect false} ["resources/public/js" "target"]
 
   :cljsbuild {:builds
               [{:id           "dev"
-                :source-paths ["src/client" "dev/client"]
+                :source-paths ["src/client" "dev/client" "checkouts/untangled-client/src"]
                 :figwheel     true
                 :compiler     {:main                 cljs.user
                                :asset-path           "js/compiled/dev"

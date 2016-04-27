@@ -1,10 +1,11 @@
 (ns app.system
   (:require
-    [untangled.server.core :as core]
     [app.api :as api]
+    [app.components.web-sockets :as ws]
+    [om.next.impl.parser :as op]
     [om.next.server :as om]
     [taoensso.timbre :as timbre]
-    [om.next.impl.parser :as op]))
+    [untangled.server.core :as core]))
 
 (defn logging-mutate [env k params]
   (timbre/info "Mutation Request: " k)
@@ -19,4 +20,6 @@
     :config-path "config/recipe.edn"
     :parser (om/parser {:read logging-query :mutate logging-mutate})
     :parser-injections #{}
-    :components {}))
+    :components {:web-socket (ws/make-web-socket-registry)}
+    :extra-routes {:routes   ["" {["/chsk"] :web-socket-location}]
+                   :handlers {:web-socket-location ws/route-handlers}}))

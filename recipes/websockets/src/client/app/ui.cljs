@@ -15,7 +15,7 @@
   Object
   (render [this]
     (let [{:keys [db/id datum/item]} (om/props this)]
-      (dom/li #js {}
+      (dom/li nil
         (or item "There is no item.  WTF")))))
 
 (def ui-datum (om/factory Datum {:keyfn :db/id}))
@@ -31,7 +31,11 @@
 
   (render [this]
     (let [{:keys [ui/react-key data]
-           :or   {ui/react-key "ROOT"}} (om/props this)]
+           :or   {ui/react-key "ROOT"}} (om/props this)
+          cnt                           (count data)]
       (dom/div #js {:key react-key}
+        (dom/button #js {:onClick #(om/transact! this `[(datum/add ~{:db/id      cnt
+                                                                     :datum/item (str "I am added datum # " cnt)})])}
+          "Add a datum")
         (dom/ul nil
           (map ui-datum data))))))
