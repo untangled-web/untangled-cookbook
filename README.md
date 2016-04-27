@@ -55,6 +55,7 @@ You should now be able to see the app at: http://localhost:8080.
 ## Full-stack Interactions
 
 - [Error Handling](recipes/error-handling)
+- [Background parallel queries](recipes/background-loads)
 - Modify/examine headers/cookies on a network request
 - Generate a new entity (UI/Server)
 - Cache invalidation
