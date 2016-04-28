@@ -30,13 +30,13 @@
 
   :plugins [[lein-cljsbuild "1.1.2"] [lein-environ "1.0.0"]]
 
-  :source-paths ["dev/server" "src/server" "checkouts/untangled-server/src"]
+  :source-paths ["dev/server" "src/server" "src/shared" "checkouts/untangled-server/src"]
   :jvm-opts ["-server" "-Xmx1024m" "-Xms512m" "-XX:-OmitStackTraceInFastThrow"]
   :clean-targets ^{:protect false} ["resources/public/js" "target"]
 
   :cljsbuild {:builds
               [{:id           "dev"
-                :source-paths ["src/client" "dev/client" "checkouts/untangled-client/src"]
+                :source-paths ["src/client" "dev/client" "src/shared" "checkouts/untangled-client/src"]
                 :figwheel     true
                 :compiler     {:main                 cljs.user
                                :asset-path           "js/compiled/dev"

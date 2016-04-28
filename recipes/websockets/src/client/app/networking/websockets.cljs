@@ -1,6 +1,7 @@
 (ns app.networking.websockets
   (:require-macros [cljs.core.async.macros :refer (go go-loop)])
-  (:require [cljs.core.async :as async :refer (<! >! put! chan)]
+  (:require [app.transit-helpers :as th]
+            [cljs.core.async :as async :refer (<! >! put! chan)]
             [cognitect.transit :as ct]
             [taoensso.sente :as sente :refer (cb-success?)]         ; <--- Add this
             [taoensso.sente.packers.transit :as sente-transit]
@@ -26,7 +27,7 @@
 (defn make-websocket-network [url & {:keys [global-error-callback]}]
   (let [ch                                   (chan)
         {:keys [chsk ch-recv send-fn state]} (sente/make-channel-socket! url ; path on server
-                                               {:packer         :edn
+                                               {:packer         th/packer
                                                 :type           :ws ; e/o #{:auto :ajax :ws}
                                                 :wrap-recv-evs? false})]
     (def chsk chsk)

@@ -1,5 +1,6 @@
 (ns app.components.web-sockets
   (:require
+   [app.transit-helpers :as th]
    [bidi.bidi :as bidi]
    [clojure.core.async :as async :refer [<! <!! chan go thread]]
    [com.stuartsierra.component :as component]
@@ -198,7 +199,8 @@
                   ajax-get-or-ws-handshake-fn
                   connected-uids]} (sente/make-channel-socket!
                                      sente-web-server-adapter
-                                     {:user-id-fn (fn [_request] (swap! id-atom inc))})]
+                                     {:user-id-fn (fn [_request] (swap! id-atom inc))
+                                      :packer th/packer})]
       (let [{:keys [api-parser
                     env]} (:handler component)
             rv            (assoc component

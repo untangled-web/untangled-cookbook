@@ -34,7 +34,7 @@
            :or   {ui/react-key "ROOT"}} (om/props this)
           cnt                           (count data)]
       (dom/div #js {:key react-key}
-        (dom/button #js {:onClick #(om/transact! this `[(datum/add ~{:db/id      cnt
+        (dom/button #js {:onClick #(om/transact! this `[(datum/add ~{:db/id      (om/tempid)
                                                                      :datum/item (str "I am added datum # " cnt)})])}
           "Add a datum")
         (dom/ul nil

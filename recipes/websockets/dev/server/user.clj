@@ -28,7 +28,7 @@
      (ra/start-figwheel! (assoc figwheel-config :build-ids build-ids))
      (ra/cljs-repl))))
 
-(set-refresh-dirs "dev/server" "src/server" "checkouts/untangled-server/src")
+(set-refresh-dirs "dev/server" "src/server" "src/shared" "checkouts/untangled-server/src")
 
 (defonce system (atom nil))
 
