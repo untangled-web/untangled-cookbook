@@ -15,10 +15,11 @@
   Object
   (render [this] (let [{:keys [name name long-query]} (om/props this)]
                    (dom/div #js {:style #js {:display "inline" :float "left" :width "200px"}}
-                     (dom/button #js {:onClick #(df/load-field this :long-query :background true)} "Load stuff")
+                     (dom/button #js {:onClick #(df/load-field this :long-query :parallel true)} "Load stuff parallel")
+                     (dom/button #js {:onClick #(df/load-field this :long-query)} "Load stuff sequential")
                      (dom/div nil
-                            name
-                            (df/lazily-loaded render-result long-query))))))
+                       name
+                       (df/lazily-loaded render-result long-query))))))
 
 (def ui-child (om/factory Child {:keyfn :id}))
 
