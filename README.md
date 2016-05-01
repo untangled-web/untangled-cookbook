@@ -38,14 +38,13 @@ You should now be able to see the app at: http://localhost:8080.
 
 ## UI
 
+- [Managing lists of data](recipes/lists)
 - Build a multi-use dialog
 - [Create a tabbed interface. Includes how to lazy-load initial tab content](recipes/tabbed-interface)
 - Validate forms against the server in real-time
 - Hook up HTML5 routing
 - Update the UI on a time schedule
 - Display multiple views of the same data in two places
-- Managing lists of data
-- 
 
 ## Security 
 
@@ -78,4 +77,3 @@ You should now be able to see the app at: http://localhost:8080.
 - Interface with SQL on the server
 - Add a Ring handler in front of API processing
 - Add a Ring handler after the processing chain
-
