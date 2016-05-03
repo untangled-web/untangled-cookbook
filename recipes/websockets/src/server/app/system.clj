@@ -1,11 +1,11 @@
 (ns app.system
-  (:require
-    [app.api :as api]
-    [app.components.web-sockets :as ws]
-    [om.next.impl.parser :as op]
-    [om.next.server :as om]
-    [taoensso.timbre :as timbre]
-    [untangled.server.core :as core]))
+  (:require [app.api :as api :refer [push-queue]]
+            [app.components.channel-wrapper :as cw]
+            [om.next.impl.parser :as op]
+            [om.next.server :as om]
+            [taoensso.timbre :as timbre]
+            [untangled.server.core :as core]
+            [untangled.websockets.components.channel-server :as cs]))
 
 (defn logging-mutate [env k params]
   (timbre/info "Mutation Request: " k)
@@ -20,6 +20,7 @@
     :config-path "config/recipe.edn"
     :parser (om/parser {:read logging-query :mutate logging-mutate})
     :parser-injections #{}
-    :components {:web-socket (ws/make-web-socket-registry)}
-    :extra-routes {:routes   ["" {["/chsk"] :web-socket-location}]
-                   :handlers {:web-socket-location ws/route-handlers}}))
+    :components {:channel-server  (cs/make-channel-server)
+                 :channel-wrapper (cw/make-channel-wrapper)}
+    :extra-routes {:routes   ["" {["/chsk"] :web-socket}]
+                   :handlers {:web-socket cs/route-handlers}}))

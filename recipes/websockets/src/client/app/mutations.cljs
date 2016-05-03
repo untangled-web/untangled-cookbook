@@ -8,3 +8,6 @@
                    ident           [:datum/by-id id]]
                (swap! state assoc-in ident params)
                (swap! state update-in [:data] (fnil conj []) ident)))})
+
+(defmethod m/mutate 'app/subscribe [{:keys [ast]} _ _]
+  {:remote ast})
