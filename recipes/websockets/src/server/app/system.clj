@@ -1,5 +1,5 @@
 (ns app.system
-  (:require [app.api :as api :refer [push-queue]]
+  (:require [app.api :as api]
             [app.components.channel-wrapper :as cw]
             [om.next.impl.parser :as op]
             [om.next.server :as om]

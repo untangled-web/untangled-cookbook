@@ -11,7 +11,7 @@
                  [org.clojure/clojurescript "1.8.51"]
                  [org.omcljs/om "1.0.0-alpha32"]
                  [binaryage/devtools "0.5.2" :exclusions [environ]]
-                 [figwheel-sidecar "0.5.2" :exclusions [ring/ring-core joda-time org.clojure/tools.reader]]
+                 [figwheel-sidecar "0.5.3" :exclusions [ring/ring-core joda-time org.clojure/tools.reader]]
                  [com.cemerick/piggieback "0.2.1"]
                  [org.clojure/tools.nrepl "0.2.12"]
                  [juxt/dirwatch "0.2.3"]
@@ -19,28 +19,19 @@
                  [navis/untangled-server "0.4.8-SNAPSHOT"]
                  [navis/untangled-datomic "0.4.8" :exclusions [com.datomic/datomic-free org.clojure/tools.cli]]
                  [navis/untangled-spec "0.3.5"]
-
-                 [org.clojure/core.async "0.2.374"]
-                 [com.taoensso/sente "1.8.1"]]
+                 [navis/untangled-websockets "0.1.0-SNAPSHOT"]]
 
   :plugins [[lein-cljsbuild "1.1.2"] [lein-environ "1.0.0"]]
 
-  :source-paths ["dev/server"
-                 "src/server"
-                 "src/shared"
-                 "checkouts/untangled-websockets/src/server"
-                 "checkouts/untangled-websockets/src/shared"]
+  :source-paths ["dev/server" "src/server" "src/shared"]
+
   :jvm-opts ["-server" "-Xmx1024m" "-Xms512m" "-XX:-OmitStackTraceInFastThrow"]
+
   :clean-targets ^{:protect false} ["resources/public/js" "target"]
 
   :cljsbuild {:builds
               [{:id           "dev"
-                :source-paths ["src/client"
-                               "dev/client"
-                               "src/shared"
-                               "checkouts/untangled-client/src"
-                               "checkouts/untangled-websockets/src/client"
-                               "checkouts/untangled-websockets/src/shared"]
+                :source-paths ["src/client" "dev/client" "src/shared"]
                 :figwheel     true
                 :compiler     {:main                 cljs.user
                                :asset-path           "js/compiled/dev"
