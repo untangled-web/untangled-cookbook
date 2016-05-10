@@ -1,9 +1,9 @@
-(ns app.components.channel-wrapper
+(ns app.components.channel-listener
   (:require [app.api :as api]
             [com.stuartsierra.component :as component]
             [untangled.websockets.protocols :refer [WSListener client-dropped client-added add-listener remove-listener push]]))
 
-(defrecord ChannelWrapper [channel-server subscriptions]
+(defrecord ChannelListener [channel-server subscriptions]
   WSListener
   (client-dropped [this ws-net cid]
     (swap! subscriptions update :general (fnil disj #{}) cid)
@@ -22,7 +22,7 @@
     (remove-listener channel-server component)
     (dissoc component :subscriptions :kill-chan)))
 
-(defn make-channel-wrapper []
+(defn make-channel-listener []
   (component/using
-    (map->ChannelWrapper {})
+    (map->ChannelListener {})
     [:channel-server]))

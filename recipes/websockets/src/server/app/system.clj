@@ -1,6 +1,6 @@
 (ns app.system
   (:require [app.api :as api]
-            [app.components.channel-wrapper :as cw]
+            [app.components.channel-listener :as cl]
             [om.next.impl.parser :as op]
             [om.next.server :as om]
             [taoensso.timbre :as timbre]
@@ -21,6 +21,6 @@
     :parser (om/parser {:read logging-query :mutate logging-mutate})
     :parser-injections #{}
     :components {:channel-server  (cs/make-channel-server)
-                 :channel-wrapper (cw/make-channel-wrapper)}
+                 :channel-listener (cl/make-channel-listener)}
     :extra-routes {:routes   ["" {["/chsk"] :web-socket}]
                    :handlers {:web-socket cs/route-handlers}}))
