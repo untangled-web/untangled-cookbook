@@ -49,7 +49,7 @@ or
    ...  :onClick #(transact! this '[(a/f)]) ...)
 ```
 
-The former is does an unfortunate thing: it breaks component reasoning. 
+The former does an unfortunate thing: it breaks component reasoning. 
 You have to think about the parent in order to write the child. This
 couples that child to a specific parent, and harms code reuse and 
 local reasoning (the parent code mentions the child, but not vice-versa).
