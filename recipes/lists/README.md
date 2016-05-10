@@ -1,7 +1,3 @@
-# IN PROGRESS
-
-This example isn't done yet...
-
 # Managing Lists
 
 Different frameworks have different ways of deal with collections of
