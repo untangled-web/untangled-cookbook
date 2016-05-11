@@ -6,3 +6,4 @@ checkouts
 .idea
 target
 compiled
+.projectile
