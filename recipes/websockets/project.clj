@@ -23,7 +23,7 @@
 
   :plugins [[lein-cljsbuild "1.1.2"] [lein-environ "1.0.0"]]
 
-  :source-paths ["dev/server" "src/server" "src/shared"]
+  :source-paths ["dev/server" "src/server"]
 
   :jvm-opts ["-server" "-Xmx1024m" "-Xms512m" "-XX:-OmitStackTraceInFastThrow"]
 
@@ -31,7 +31,7 @@
 
   :cljsbuild {:builds
               [{:id           "dev"
-                :source-paths ["src/client" "dev/client" "src/shared"]
+                :source-paths ["src/client" "dev/client"]
                 :figwheel     true
                 :compiler     {:main                 cljs.user
                                :asset-path           "js/compiled/dev"
