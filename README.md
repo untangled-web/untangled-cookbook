@@ -62,7 +62,7 @@ You should now be able to see the app at: http://localhost:8080.
 - Delete an item (UI/server)
 - Add autocompletion to a form field
 - Reject a transaction on the server and handle that on the client
-- Paginate through a very large list of items (while also lazily loading them from a server)
+- [Paginate a very large list (with lazy loading)](recipes/paginate-large-lists)
 
 ## Server push
 
