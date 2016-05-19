@@ -7,3 +7,4 @@ checkouts
 target
 compiled
 .projectile
+*.js

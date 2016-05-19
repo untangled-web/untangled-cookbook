@@ -56,6 +56,7 @@ You should now be able to see the app at: http://localhost:8080.
 - [Error Handling](recipes/error-handling)
 - [Background parallel queries](recipes/background-loads)
 - [Run a load from within a mutation (see Paginate a very large list)](recipes/paginate-large-lists)
+- [Showing visible indicators while lazy loads are in progress](recipes/lazy-loading-visual-indicators)
 - Modify/examine headers/cookies on a network request
 - Generate a new entity (UI/Server)
 - Cache invalidation
