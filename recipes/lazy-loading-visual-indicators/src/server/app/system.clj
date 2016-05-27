@@ -11,6 +11,7 @@
   (api/apimutate env k params))
 
 (defn logging-query [{:keys [ast] :as env} k params]
+  (Thread/sleep 1000)
   (timbre/info "Query: " (op/ast->expr ast))
   (api/api-read env k params))
 

@@ -10,4 +10,11 @@
   (timbre/error "Unrecognized mutation " k))
 
 (defmethod api-read :default [{:keys [ast query] :as env} dispatch-key params]
-    (timbre/error "Unrecognized query " (op/ast->expr ast)))
+  (timbre/error "Unrecognized query " (op/ast->expr ast)))
+
+(defmethod api-read :ui [{:keys [ast query] :as env} dispatch-key params]
+  (let [component (second (:key ast))]
+    (case component
+      :panel {:value {:child {:label "Child"}}}
+      :child {:value {:items [{:label "A"} {:label "B"}]}}
+      nil)))
