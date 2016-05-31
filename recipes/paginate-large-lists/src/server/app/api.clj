@@ -12,8 +12,6 @@
 (defmethod api-read :default [{:keys [ast query] :as env} dispatch-key params]
   (timbre/error "Unrecognized query " (op/ast->expr ast)))
 
-(defmethod api-read :items [e k p] {:value []})
-
 ; start and end come from the top-level query, which we propagate in env
 (defmethod api-read :start [{:keys [start]} k p] {:value start})
 (defmethod api-read :end [{:keys [end]} k p] {:value end})
