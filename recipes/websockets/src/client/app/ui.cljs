@@ -90,8 +90,8 @@
     {:new-user ""})
 
   (componentWillMount [this]
-    (df/load-collection this [{:app/channels (om/get-query Channel)}])
-    (df/load-collection this [{:app/users (om/get-query User)}]))
+    (df/load-data this [{:app/channels (om/get-query Channel)}])
+    (df/load-data this [{:app/users (om/get-query User)}]))
 
   (render [this]
     (let [{:keys [ui/react-key data app/channels app/users current-user current-channel]
