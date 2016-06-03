@@ -89,9 +89,7 @@
   (initLocalState [this]
     {:new-user ""})
 
-  (componentWillMount [this]
-    (df/load-data this [{:app/channels (om/get-query Channel)}])
-    (df/load-data this [{:app/users (om/get-query User)}]))
+
 
   (render [this]
     (let [{:keys [ui/react-key data app/channels app/users current-user current-channel]

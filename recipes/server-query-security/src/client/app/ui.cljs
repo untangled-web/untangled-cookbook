@@ -29,6 +29,6 @@
       (dom/div #js {:key react-key}
         (when server-error
           (dom/p nil (pr-str "SERVER ERROR: " server-error)))
-        (dom/button #js {:onClick #(df/load-data this [{:person (om/get-query Person)}])} "Query for person with credit card")
-        (dom/button #js {:onClick #(df/load-data this [{:person (om/get-query Person)}] :without #{:cc-number})} "Query for person WITHOUT credit card")
+        (dom/button #js {:onClick #(df/load-data this [{:person (om/get-query Person)}] :refresh [:person])} "Query for person with credit card")
+        (dom/button #js {:onClick #(df/load-data this [{:person (om/get-query Person)}] :refresh [:person] :without #{:cc-number})} "Query for person WITHOUT credit card")
         (df/lazily-loaded ui-person person)))))
