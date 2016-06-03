@@ -1,6 +1,36 @@
 (ns app.mutations
   (:require [untangled.client.mutations :as m]))
 
+;;; PUSH MUTATIONS
+
+(defmethod m/mutate 'push/user-left [{:keys [state ast] :as env} _ {:keys [msg]}]
+  {:action (fn []
+             (let [channel-ident (get @state :current-channel)
+                   user-ident [:user/by-id (:db/id msg)]]
+               (swap! state update :user/by-id dissoc (:db/id msg))
+               (swap! state update :app/users
+                 (fn [users] (into [] (remove #(= user-ident %)) users)))
+               (swap! state update-in (conj channel-ident :channel/users)
+                 (fn [users] (into [] (remove #(= user-ident %)) users)))))})
+
+(defmethod m/mutate 'push/user-new [{:keys [state ast] :as env} _ {:keys [msg]}]
+  {:action (fn []
+             (let [channel-ident (get @state :current-channel)
+                   user-ident [:user/by-id (:db/id msg)]]
+               (swap! state assoc-in user-ident msg)
+               (swap! state update :app/users (fnil conj []) user-ident)
+               (swap! state update-in (conj channel-ident :channel/users) (fnil conj []) user-ident)
+               {:refresh [:app/users]}))})
+
+(defmethod m/mutate 'push/message-new [{:keys [state ast] :as env} _ {:keys [msg]}]
+  {:action (fn []
+             (let [channel-ident (get @state :current-channel)
+                   message-ident [:message/by-id (:db/id msg)]]
+               (swap! state assoc-in message-ident msg)
+               (swap! state update-in (conj channel-ident :channel/messages) (fnil conj []) message-ident)))})
+
+;;; CLIENT MUTATIONS
+
 (defmethod m/mutate 'channel/set [{:keys [state ast] :as env} _ params]
   {:action (fn []
              (swap! state assoc :current-channel params))})
