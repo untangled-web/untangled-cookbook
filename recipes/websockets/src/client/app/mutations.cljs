@@ -9,9 +9,9 @@
                    user-ident [:user/by-id (:db/id msg)]]
                (swap! state update :user/by-id dissoc (:db/id msg))
                (swap! state update :app/users
-                 (fn [users] (into [] (remove #(= user-ident %)) users)))
+                      (fn [users] (into [] (remove #(= user-ident %)) users)))
                (swap! state update-in (conj channel-ident :channel/users)
-                 (fn [users] (into [] (remove #(= user-ident %)) users)))))})
+                      (fn [users] (into [] (remove #(= user-ident %)) users)))))})
 
 (defmethod m/mutate 'push/user-new [{:keys [state ast] :as env} _ {:keys [msg]}]
   {:action (fn []
@@ -19,8 +19,7 @@
                    user-ident [:user/by-id (:db/id msg)]]
                (swap! state assoc-in user-ident msg)
                (swap! state update :app/users (fnil conj []) user-ident)
-               (swap! state update-in (conj channel-ident :channel/users) (fnil conj []) user-ident)
-               {:refresh [:app/users]}))})
+               (swap! state update-in (conj channel-ident :channel/users) (fnil conj []) user-ident)))})
 
 (defmethod m/mutate 'push/message-new [{:keys [state ast] :as env} _ {:keys [msg]}]
   {:action (fn []
@@ -39,15 +38,15 @@
   {:remote ast
    :action (fn []
              (let [{:keys [db/id]} params
-                   ident           [:user/by-id id]
-                   def-chan        (first (-> @state :app/channels))]
+                   ident [:user/by-id id]
+                   def-chan (first (-> @state :app/channels))]
                (swap! state assoc-in ident params)
                (swap! state assoc :current-channel def-chan :current-user ident)
                (swap! state update :app/users (fnil conj []) ident)
                (swap! state update-in [:channel/by-id (second def-chan)]
-                 (fn [chan ident]
-                   (update chan :channel/users (fnil conj []) ident))
-                 ident))
+                      (fn [chan ident]
+                        (update chan :channel/users (fnil conj []) ident))
+                      ident))
              {})})
 
 (defmethod m/mutate 'message/add [{:keys [state ast] :as env} _ params]
@@ -55,7 +54,7 @@
    :action (fn []
              (let [channel-ident (get @state :current-channel)
                    {:keys [db/id]} params
-                   ident           [:message/by-id id]]
+                   ident [:message/by-id id]]
                (swap! state assoc-in ident params)
                (swap! state update-in (conj channel-ident :channel/messages) (fnil conj []) ident))
              {})})
