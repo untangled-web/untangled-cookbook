@@ -9,18 +9,18 @@
                  [commons-codec "1.10"]
                  [org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.8.51"]
-                 [org.omcljs/om "1.0.0-alpha35"]
+                 [org.omcljs/om "1.0.0-alpha36"]
                  [binaryage/devtools "0.5.2"]
                  [figwheel-sidecar "0.5.3" :exclusions [ring/ring-core joda-time org.clojure/tools.reader]]
                  [com.cemerick/piggieback "0.2.1"]
                  [org.clojure/tools.nrepl "0.2.12"]
                  [juxt/dirwatch "0.2.3"]
-                 [navis/untangled-client "0.4.10" :exclusions [cljsjs/react org.omcljs/om]]
-                 [navis/untangled-server "0.4.8"]
+                 [navis/untangled-client "0.5.0-SNAPSHOT" :exclusions [cljsjs/react org.omcljs/om]]
+                 [navis/untangled-server "0.5.0"]
                  [navis/untangled-spec "0.3.6"]
                  [navis/untangled-websockets "0.1.0"]]
 
-  :plugins [[lein-cljsbuild "1.1.2"]]
+  :plugins [[lein-cljsbuild "1.1.3"]]
 
   :source-paths ["dev/server" "src/server"]
 
