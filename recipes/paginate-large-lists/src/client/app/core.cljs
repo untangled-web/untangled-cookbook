@@ -84,11 +84,11 @@
         end (-> @state :current-page :start (+ pg))]
     (when (> end start)
       {:remote (df/remote-load env)
-       :action #(df/load-data-action state (page-query start end) :post-mutation 'page-loaded)})))
+       :action #(df/load-data-action state (page-query start end) :post-mutation 'page-loaded :refresh [:items])})))
 
 (defonce app (atom (uc/new-untangled-client
                      :initial-state initial-state
                      :started-callback
                      (fn [{:keys [reconciler]}]
-                       (df/load-data reconciler (page-query 0 10) :post-mutation 'page-loaded)))))
+                       (df/load-data reconciler (page-query 0 10) :post-mutation 'page-loaded :refresh [:items])))))
 
