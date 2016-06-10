@@ -6,12 +6,5 @@
     [untangled.client.data-fetch :as df]
     [om.next :as om]))
 
-(def initial-state {:ui/react-key "abc"})
-
-(defonce app (atom (uc/new-untangled-client
-                     :initial-state initial-state
-                     :started-callback
-                     (fn [{:keys [reconciler]}]
-                       ; TODO
-                       ))))
+(defonce app (atom (uc/new-untangled-client)))
 
