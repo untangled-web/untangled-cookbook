@@ -5,33 +5,8 @@
             [untangled.client.core :refer [InitialAppState initial-state]]
             yahoo.intl-messageformat-with-locales))
 
-(defui ^:once Label
-  static om/IQuery
-  (query [this] [:id :value])
-  static om/Ident
-  (ident [this props] [:labels/by-id (:id props)])
-  Object
-  (render [this]
-    (let [{:keys [value]} (om/props this)]
-      (dom/span nil value))))
-
-(def ui-label (om/factory Label {:keyfn :id}))
-
-(defui ^:once Child
-  static InitialAppState
-  (initial-state [clz params] {:ui/checked true})
-  static om/IQuery
-  (query [this] [:id {:label (om/get-query Label)}])
-  static om/Ident
-  (ident [this props] [:child/by-id (:id props)])
-  Object
-  (render [this]
-    (let [{:keys [label]} (om/props this)]
-      (dom/div #js {:className "xyz"}
-        (dom/span #js {:className "a"} (ui-label label))))))
-
-(def ui-child (om/factory Child {:keyfn :id}))
-
+;; Foo and Bar are elements of a mutli-type to-many union relation (each leaf can be a Foo or a Bar). We use params to
+;; allow initial state to put more than one in place and have them be unique.
 (defui Foo
   static InitialAppState
   (initial-state [clz params] (merge {:type :foo} params))
@@ -60,6 +35,9 @@
 
 (def ui-bar (om/factory Bar {:keyfn :id}))
 
+;; This is the to-many union component. It is the decision maker (it has no state or rendering of it's own)
+;; The initial state of this component is the to-many (vector) value of various children
+;; The render just determines which thing it is, and passes on the that renderer
 (defui ListItem
   static InitialAppState
   (initial-state [clz params] [(initial-state Bar {:id 1 :label "A"}) (initial-state Foo {:id 2 :label "B"}) (initial-state Bar {:id 3 :label "C"})])
@@ -77,6 +55,8 @@
 
 (def ui-list-item (om/factory ListItem {:keyfn :id}))
 
+;; Settings and Main are the target "Panes" of a to-one union (e.g. imagine tabs...we use buttons as the tab switching in
+;; this example). The initial state looks very much like any other component, as does the rendering.
 (defui ^:once Settings
   static InitialAppState
   (initial-state [clz params] {:type :settings :id :singleton})
@@ -99,6 +79,9 @@
 
 (def ui-main (om/factory Main {:keyfn :type}))
 
+;; This is a to-one union component. Again, it has no state of its own or rendering. The initial state is the single
+;; child that should appear. Untangled (during startup) will detect this component, and then use the query to figure out
+;; what other children (the ones that have initial-state defined) should be placed into app state.
 (defui ^:once PaneSwitcher
   static InitialAppState
   (initial-state [clz params] (initial-state Main nil))
@@ -116,31 +99,28 @@
 
 (def ui-panes (om/factory PaneSwitcher {:keyfn :type}))
 
+;; The root. Everything just composes to here (state and query)
+;; Note, in core (where we create the app) there is no need to say anything about initial state!
 (defui ^:once Root
   static InitialAppState
   (initial-state [clz params] {:ui/react-key "abc"
-                               :children     []
                                :panes        (initial-state PaneSwitcher nil)
                                :items        (initial-state ListItem nil)})
   static om/IQuery
-  (query [this] [:ui/react-key :value {:children (om/get-query Child)}
+  (query [this] [:ui/react-key
                  {:items (om/get-query ListItem)}
                  {:panes (om/get-query PaneSwitcher)}])
   Object
   (render [this]
-    (let [{:keys [ui/react-key value children panes items] :or {value ""}} (om/props this)]
+    (let [{:keys [ui/react-key panes items]} (om/props this)]
       (dom/div #js {:key react-key}
-        (dom/input #js {:type "text" :value value})
         (dom/button #js {:onClick (fn [evt] (om/transact! this '[(nav/settings)]))} "Go to settings")
         (dom/button #js {:onClick (fn [evt] (om/transact! this '[(nav/main)]))} "Go to main")
-        (dom/button #js {:onClick (fn [evt] (om/transact! this '[(set-to-tony)]))} "Set to Tony")
+
         (ui-panes panes)
-        (mapv ui-child children)
+
         (dom/h1 nil "Heterogenous list:")
+
         (dom/ul nil
           (mapv ui-list-item items))))))
 
-(comment
-  (uc/merge-state! @app.core/app Child {:id 1 :label {:id 41 :value "Blammo!"}} :append [:children])
-  (uc/merge-state! @app.core/app Child {:id 2 :label {:id 42 :value "Boo!"}} :replace [:children 0])
-  (uc/merge-state! @app.core/app Child {:id 3 :label {:id 43 :value "oogle!"}} :prepend [:children]))
