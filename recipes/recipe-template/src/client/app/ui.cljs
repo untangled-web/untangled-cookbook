@@ -2,11 +2,11 @@
   (:require [om.dom :as dom]
             [om.next :as om :refer-macros [defui]]
             [untangled.i18n :refer-macros [tr trf]]
-            [untangled.client.core :refer [Constructor initial-state]]
+            [untangled.client.core :refer [InitialAppState initial-state]]
             yahoo.intl-messageformat-with-locales))
 
 (defui ^:once Child
-  static Constructor
+  static InitialAppState
   (initial-state [cls params] {:id 0 :label (:label params)})
   static om/IQuery
   (query [this] [:id :label])
@@ -20,7 +20,7 @@
 (def ui-child (om/factory Child))
 
 (defui ^:once Root
-  static Constructor
+  static InitialAppState
   (initial-state [cls params]
     {:child (initial-state Child {:label "Constructed Label"})})
   static om/IQuery

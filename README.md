@@ -78,3 +78,4 @@ You should now be able to see the app at: http://localhost:8080.
 - Interface with SQL on the server
 - Add a Ring handler in front of API processing
 - Add a Ring handler after the processing chain
+- [Using InitialAppState protocol to build starting application state](recipes/initial-app-state)
