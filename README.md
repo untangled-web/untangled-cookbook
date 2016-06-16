@@ -39,6 +39,7 @@ You should now be able to see the app at: http://localhost:8080.
 ## UI
 
 - [Managing lists of data](recipes/lists)
+- [Using InitialAppState protocol to build starting application state](recipes/initial-app-state)
 - Build a multi-use dialog
 - [Create a tabbed interface. Includes how to lazy-load initial tab content](recipes/tabbed-interface)
 - Validate forms against the server in real-time
@@ -78,4 +79,3 @@ You should now be able to see the app at: http://localhost:8080.
 - Interface with SQL on the server
 - Add a Ring handler in front of API processing
 - Add a Ring handler after the processing chain
-- [Using InitialAppState protocol to build starting application state](recipes/initial-app-state)
