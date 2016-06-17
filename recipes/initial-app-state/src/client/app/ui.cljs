@@ -2,36 +2,50 @@
   (:require [om.dom :as dom]
             [om.next :as om :refer-macros [defui]]
             [untangled.i18n :refer-macros [tr trf]]
-            [untangled.client.core :refer [InitialAppState initial-state]]
+            [untangled.client.core :as uc :refer [InitialAppState initial-state]]
             yahoo.intl-messageformat-with-locales))
+
+(defui ItemLabel
+  static InitialAppState
+  (initial-state [clz {:keys [value]}] {:value value})
+  static om/IQuery
+  (query [this] [:value])
+  static om/Ident
+  (ident [this {:keys [value]}] [:labels/by-value value])
+  Object
+  (render [this]
+    (let [{:keys [value]} (om/props this)]
+      (dom/p nil value))))
+
+(def ui-label (om/factory ItemLabel {:keyfn :value}))
 
 ;; Foo and Bar are elements of a mutli-type to-many union relation (each leaf can be a Foo or a Bar). We use params to
 ;; allow initial state to put more than one in place and have them be unique.
 (defui Foo
   static InitialAppState
-  (initial-state [clz params] (merge {:type :foo} params))
+  (initial-state [clz {:keys [id label]}] {:id id :type :foo :label (initial-state ItemLabel {:value label})})
   static om/IQuery
-  (query [this] [:type :id :label])
+  (query [this] [:type :id {:label (om/get-query ItemLabel)}])
   Object
   (render [this]
     (let [{:keys [label]} (om/props this)]
       (dom/div nil
         (dom/h2 nil "Foo")
-        (dom/p nil label)))))
+        (ui-label label)))))
 
 (def ui-foo (om/factory Foo {:keyfn :id}))
 
 (defui Bar
   static InitialAppState
-  (initial-state [clz params] (merge {:type :bar} params))
+  (initial-state [clz {:keys [id label]}] {:id id :type :bar :label (initial-state ItemLabel {:value label})})
   static om/IQuery
-  (query [this] [:type :id :label])
+  (query [this] [:type :id {:label (om/get-query ItemLabel)}])
   Object
   (render [this]
     (let [{:keys [label]} (om/props this)]
       (dom/div nil
         (dom/h2 nil "Bar")
-        (dom/p nil label)))))
+        (ui-label label)))))
 
 (def ui-bar (om/factory Bar {:keyfn :id}))
 
@@ -59,23 +73,25 @@
 ;; this example). The initial state looks very much like any other component, as does the rendering.
 (defui ^:once Settings
   static InitialAppState
-  (initial-state [clz params] {:type :settings :id :singleton})
+  (initial-state [clz params] {:type :settings :id :singleton :label (initial-state ItemLabel {:value "Settings"})})
   static om/IQuery
-  (query [this] [:type :id])
+  (query [this] [:type :id {:label (om/get-query ItemLabel)}])
   Object
   (render [this]
-    (dom/p nil "SETTINGS")))
+    (let [{:keys [label]} (om/props this)]
+      (ui-label label))))
 
 (def ui-settings (om/factory Settings {:keyfn :type}))
 
 (defui ^:once Main
   static InitialAppState
-  (initial-state [clz params] {:type :main :id :singleton})
+  (initial-state [clz params] {:type :main :id :singleton :label (initial-state ItemLabel {:value "Main"})})
   static om/IQuery
-  (query [this] [:type :id])
+  (query [this] [:type :id {:label (om/get-query ItemLabel)}])
   Object
   (render [this]
-    (dom/p nil "Main")))
+    (let [{:keys [label]} (om/props this)]
+      (ui-label label))))
 
 (def ui-main (om/factory Main {:keyfn :type}))
 
