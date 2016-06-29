@@ -26,8 +26,8 @@
         (dom/h2 nil (str "Items " start "+ (of " total-results ")"))
         (dom/button #js {:onClick #(om/transact! this '[(prior-page) (fill-cache)])} "Prior Page")
         (dom/button #js {:onClick #(om/transact! this '[(next-page) (fill-cache)])} "Next Page")
-        (mapv ui-list-item items)))
-    ))
+        (mapv ui-list-item items)))))
+
 
 (def ui-list (om/factory LargeList))
 

@@ -15,7 +15,7 @@
                  [com.cemerick/piggieback "0.2.1"]
                  [org.clojure/tools.nrepl "0.2.12"]
                  [juxt/dirwatch "0.2.3"]
-                 [navis/untangled-client "0.5.0" :exclusions [cljsjs/react org.omcljs/om]]
+                 [navis/untangled-client "0.5.3" :exclusions [cljsjs/react org.omcljs/om]]
                  [navis/untangled-server "0.4.8"]
                  [navis/untangled-spec "0.3.6"]
                  [navis/untangled-datomic "0.4.9" :exclusions [com.datomic/datomic-free org.clojure/tools.cli]]]
@@ -53,5 +53,5 @@
   :figwheel {:css-dirs ["resources/public/css"]}
 
   :repl-options {:init-ns          user
-                 :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
-  )
+                 :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]})
+

@@ -12,7 +12,7 @@
 
 (def figwheel-config
   {:figwheel-options {:css-dirs ["resources/public/css"]}
-   :build-ids        ["dev" "test"]
+   :build-ids        ["dev"]
    :all-builds       (figwheel-sidecar.repl/get-project-cljs-builds)})
 
 (defn start-figwheel

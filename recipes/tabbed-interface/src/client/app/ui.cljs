@@ -3,10 +3,10 @@
             [om.next :as om :refer-macros [defui]]
             [untangled.i18n :refer-macros [tr trf]]
             yahoo.intl-messageformat-with-locales
-            [untangled.client.core :refer [Constructor initial-state]]))
+            [untangled.client.core :refer [InitialAppState initial-state]]))
 
 (defui ^:once SettingsTab
-  static Constructor
+  static InitialAppState
   (initial-state [clz params] {:id :tab :which-tab :settings :settings-content "Settings Tab"})
   static om/IQuery
   ; This query uses a "link"...a special ident with '_ as the ID. This indicates the item is at the database
@@ -23,7 +23,7 @@
 (def ui-settings-tab (om/factory SettingsTab))
 
 (defui ^:once MainTab
-  static Constructor
+  static InitialAppState
   (initial-state [clz params] {:id :tab :which-tab :main :main-content "Main Tab"})
   static om/IQuery
   (query [this] [:which-tab :main-content])
@@ -42,10 +42,10 @@
 ; 2. The ident MUST derive the correct db ident for whatever you got in props (which will come from the child)
 ; 3. You are responsible for rendering the correct UI from this render to properly render the child
 (defui ^:once TabUnion
-  ;; Constructor can only initialize one of these (it is a to-one relation). See app.core for the trick to initialize other tabs
+  ;; InitialAppState can only initialize one of these (it is a to-one relation). See app.core for the trick to initialize other tabs
   ; IMPORTANT NOTE: We're using the state of **A** specific child. This is because a union controlling component has no state
   ; of it's own.
-  static Constructor
+  static InitialAppState
   (initial-state [clz params] (initial-state MainTab nil))
   static om/IQuery
   (query [this] {:main (om/get-query MainTab) :settings (om/get-query SettingsTab)})
@@ -65,7 +65,7 @@
 (defui ^:once Root
   ; Construction MUST compose to root, just like the query. The resulting tree will automatically be normalized into the
   ; app state graph database.
-  static Constructor
+  static InitialAppState
   (initial-state [clz params] {:ui/react-key "initial" :current-tab (initial-state TabUnion nil)})
   static om/IQuery
   (query [this] [:ui/react-key {:current-tab (om/get-query TabUnion)}])
