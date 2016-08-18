@@ -14,22 +14,30 @@
                  [figwheel-sidecar "0.5.3-1" :exclusions [ring/ring-core joda-time org.clojure/tools.reader]]
                  [com.cemerick/piggieback "0.2.1"]
                  [org.clojure/tools.nrepl "0.2.12"]
+                 [com.google.guava/guava "19.0"]
                  [juxt/dirwatch "0.2.3"]
-                 [navis/untangled-client "0.5.3" :exclusions [cljsjs/react org.omcljs/om]]
-                 [navis/untangled-server "0.4.8"]
-                 [navis/untangled-spec "0.3.6"]
+                 [com.stuartsierra/component "0.3.1"]
+                 [bidi "2.0.9"]
+                 [prismatic/schema "1.0.3"]
+                 [commons-fileupload "1.3.1"]
+                 [commons-io "2.4"]
+                 [clj-time "0.11.0"]
+                 [joda-time "2.8.2"]
+                 [navis/untangled-client "0.5.5-SNAPSHOT" :exclusions [cljsjs/react org.omcljs/om]]
+                 [navis/untangled-server "0.6.0"]
+                 [navis/untangled-spec "0.3.8"]
                  [navis/untangled-datomic "0.4.9" :exclusions [com.datomic/datomic-free org.clojure/tools.cli]]]
 
   :plugins [[lein-cljsbuild "1.1.3"]]
 
-  :source-paths ["dev/server" "src/server"]
+  :source-paths ["dev/server" "src/server" "checkouts/untangled-client/src"]
   :test-paths ["test/client"]
   :jvm-opts ["-server" "-Xmx1024m" "-Xms512m" "-XX:-OmitStackTraceInFastThrow"]
   :clean-targets ^{:protect false} ["resources/public/js" "target"]
 
   :cljsbuild {:builds
               [{:id           "dev"
-                :source-paths ["src/client" "dev/client"]
+                :source-paths ["src/client" "dev/client" "checkouts/untangled-client/src"]
                 :figwheel     true
                 :compiler     {:main                 cljs.user
                                :asset-path           "js/compiled/dev"
@@ -53,5 +61,4 @@
   :figwheel {:css-dirs ["resources/public/css"]}
 
   :repl-options {:init-ns          user
-                 :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
-  )
+                 :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]})
