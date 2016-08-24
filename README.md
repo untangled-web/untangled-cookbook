@@ -42,7 +42,7 @@ You should now be able to see the app at: http://localhost:8080.
 - [Using InitialAppState protocol to build starting application state](recipes/initial-app-state)
 - Build a multi-use dialog
 - [Create a tabbed interface. Includes how to lazy-load initial tab content](recipes/tabbed-interface)
-- [Cases where component local state is useful. Includes examples of using HTML5 canvas and form fields.](recipes/component-local-state)
+- [Using component local state](recipes/component-local-state)
 - Validate forms against the server in real-time
 - Hook up HTML5 routing
 - Update the UI on a time schedule
