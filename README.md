@@ -59,6 +59,11 @@ You should now be able to see the app at: http://localhost:8080.
 - [Background parallel queries](recipes/background-loads)
 - [Run a load from within a mutation (see Paginate a very large list)](recipes/paginate-large-lists)
 - [Showing visible indicators while lazy loads are in progress](recipes/lazy-loading-visual-indicators)
+- Return a value from a mutation - You cannot. Untangled/Om do not work this way. The method to get this effect
+is to include a remote read in your mutation. You can do this via `load-data-action` in your mutation function
+(see [Run a load from within a mutation (see Paginate a very large list)](recipes/paginate-large-lists)), or by
+including a `(load-data)` abstract call in your top-level `transact!` (see the [Getting Started video on server
+interactions at approximately 00:24:56](https://youtu.be/t49JYB27fv8?t=24m56s)).
 - Modify/examine headers/cookies on a network request
 - Generate a new entity (UI/Server)
 - Cache invalidation
