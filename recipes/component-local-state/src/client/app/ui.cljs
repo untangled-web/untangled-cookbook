@@ -74,8 +74,9 @@
                        :onMouseDown (fn [evt] (place-marker this evt))
                        :onMouseMove (fn [evt] (hover-marker this evt))
                        :ref         (fn [r]
-                                      (om/update-state! this assoc :canvas r)
+                                      ; when ref is updated, this fn gets called with nil (to help you manage memory leaks), then the new canvas
                                       (when r
+                                        (om/update-state! this assoc :canvas r)
                                         (render-hover-and-marker (om/props this) (om/get-state this))))
                        :style       #js {:border "1px solid black"}}))))
 
