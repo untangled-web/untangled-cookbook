@@ -7,26 +7,32 @@
 
 (defui ^:once Child
   static InitialAppState
-  (initial-state [cls params] {:id 0 :label (:label params)})
+  (initial-state [cls _] {:id 0})
   static om/IQuery
-  (query [this] [:id :label])
+  (query [this] [:id])
   static om/Ident
   (ident [this props] [:child/by-id (:id props)])
   Object
+  (initLocalState [this] {})
+  (componentDidMount [this] (js/console.log :mount (om/props this)))
+  (componentWillReceiveProps [this props] (js/console.log :will props))
+  (componentWillUpdate [this next-props next-state] (js/console.log :will next-props :st next-state :oldprops (om/props this)))
   (render [this]
-    (let [{:keys [id label]} (om/props this)]
-      (dom/p nil label))))
+    (dom/canvas #js {:width "100px" :height "100px" :style #js {:border "1px solid black"}})))
 
 (def ui-child (om/factory Child))
 
 (defui ^:once Root
   static InitialAppState
   (initial-state [cls params]
-    {:child (initial-state Child {:label "Constructed Label"})})
+    {:ui/react-key "K" :child (initial-state Child nil)})
   static om/IQuery
-  (query [this] [{:child (om/get-query Child)}])
+  (query [this] [:ui/react-key {:child (om/get-query Child)}])
   Object
   (render [this]
-    (let [{:keys [child]} (om/props this)]
-      (dom/div #js {} (ui-child child)))))
+    (let [{:keys [ui/react-key child]} (om/props this)]
+      (js/console.log react-key)
+      (dom/div #js {:key react-key}
+        (dom/p nil "Ho")
+        (ui-child child)))))
 

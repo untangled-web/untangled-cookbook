@@ -10,8 +10,9 @@
 (enable-console-print!)
 
 ; Use Chrome...these enable proper formatting of cljs data structures!
-(devtools/enable-feature! :sanity-hints)
-(devtools/install!)
+(defonce tools-installed (do
+                           (devtools/enable-feature! :sanity-hints)
+                           (devtools/install!)))
 
 ; Mount the app and remember it.
 (reset! app (core/mount @app ui/Root "app"))
