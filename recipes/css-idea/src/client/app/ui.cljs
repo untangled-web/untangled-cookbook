@@ -23,8 +23,7 @@
     (let [p (local-kw Child :p)]
       (css-merge
         [p {:font-weight 'bold}]
-        [(gs/at-media {:min-width (px 800)} [p {:color 'red}])]
-        )))
+        [(gs/at-media {:min-width (px 700)} [p {:color 'red}])])))
   static InitialAppState
   (initial-state [cls params] {:id 0 :label (:label params)})
   static om/IQuery
@@ -34,8 +33,8 @@
   Object
   (render [this]
     (let [{:keys [id label]} (om/props this)]
-      (dom/div nil
-        (dom/p #js {:className (local-class Child :p)} label)))))
+      (css/apply-css Child
+        (dom/p #js {:data-class :p} label)))))
 
 (def ui-child (om/factory Child))
 
@@ -52,7 +51,7 @@
   Object
   (render [this]
     (let [{:keys [child ui/react-key]} (om/props this)]
-      (dom/div #js {:key react-key :className (local-class Root)}
-        (dom/style nil (g/css (css/css Root)))
+      (dom/div #js {:key react-key}
+        #_(dom/style nil (g/css (css/css Root)))
         (ui-child child)))))
 

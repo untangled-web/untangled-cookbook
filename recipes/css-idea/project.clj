@@ -9,7 +9,7 @@
                  [commons-codec "1.10"]
                  [org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.229"]
-                 [org.omcljs/om "1.0.0-alpha44"]
+                 [org.omcljs/om "1.0.0-alpha45"]
                  [binaryage/devtools "0.5.2"]
                  [figwheel-sidecar "0.5.3-1" :exclusions [ring/ring-core joda-time org.clojure/tools.reader]]
                  [com.cemerick/piggieback "0.2.1"]

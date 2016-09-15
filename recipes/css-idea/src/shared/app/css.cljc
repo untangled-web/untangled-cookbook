@@ -60,13 +60,13 @@
        (.appendChild (.-body js/document) style-ele))))
 
 #?(:clj
-   (defn defines-class? [ele] (and (map? ele) (contains? ele :class))))
+   (defn defines-class? [ele] (and (map? ele) (contains? ele :data-class))))
 
 #?(:clj
    (defn localize-classnames
      "Replace any class names in map m with localized versions (names prefixed with $ will be mapped to root)"
      [class m]
-     (let [subclass (:class m)
+     (let [subclass (:data-class m)
            entry (fn [c]
                    (let [cn (name c)]
                      (if (str/starts-with? cn "$")
@@ -75,10 +75,11 @@
            subclasses (if (vector? subclass)
                         (apply list (reduce (fn [acc c] (conj acc (entry c))) ['str] subclass))
                         (entry subclass))]
-       (-> m
-           (assoc :className subclasses)
-           (dissoc :class)))))
+       (list 'cljs.core/clj->js (-> m
+                                    (assoc :className subclasses)
+                                    (dissoc :data-class))))))
 
 #?(:clj
    (defmacro apply-css [class body]
+     (println "APPLY")
      (transform (walker defines-class?) (partial localize-classnames class) body)))
