@@ -3,7 +3,10 @@
      (:use com.rpl.specter))
   (:require [clojure.string :as str]
             [garden.core :as g]
-            [om.next :as om]))
+            #?(:clj [cljs.tagged-literals])
+            [om.next :as om])
+  #?(:clj
+     (:import (cljs.tagged_literals JSValue))))
 
 #?(:cljs
    (defprotocol CSS
@@ -60,26 +63,28 @@
        (.appendChild (.-body js/document) style-ele))))
 
 #?(:clj
-   (defn defines-class? [ele] (and (map? ele) (contains? ele :data-class))))
+   (defn defines-class? [ele] (and (= JSValue (type ele))
+                                   (map? (.val ele))
+                                   (contains? (.val ele) :class))))
 
 #?(:clj
    (defn localize-classnames
      "Replace any class names in map m with localized versions (names prefixed with $ will be mapped to root)"
      [class m]
-     (let [subclass (:data-class m)
+     (let [m (.val m)
+           subclass (:class m)
            entry (fn [c]
                    (let [cn (name c)]
                      (if (str/starts-with? cn "$")
                        (str/replace cn #"^[$]" "")
                        `(app.css/local-class ~class ~cn))))
            subclasses (if (vector? subclass)
-                        (apply list (reduce (fn [acc c] (conj acc (entry c))) ['str] subclass))
+                        (apply list (reduce (fn [acc c] (conj acc (entry c) " ")) ['str] subclass))
                         (entry subclass))]
        (list 'cljs.core/clj->js (-> m
                                     (assoc :className subclasses)
-                                    (dissoc :data-class))))))
+                                    (dissoc :class))))))
 
 #?(:clj
    (defmacro apply-css [class body]
-     (println "APPLY")
      (transform (walker defines-class?) (partial localize-classnames class) body)))

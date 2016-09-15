@@ -34,7 +34,7 @@
   (render [this]
     (let [{:keys [id label]} (om/props this)]
       (css/apply-css Child
-        (dom/p #js {:data-class :p} label)))))
+        (dom/p #js {:class [:p :$r]} label)))))
 
 (def ui-child (om/factory Child))
 
@@ -52,6 +52,6 @@
   (render [this]
     (let [{:keys [child ui/react-key]} (om/props this)]
       (dom/div #js {:key react-key}
-        #_(dom/style nil (g/css (css/css Root)))
+        (dom/style nil (g/css (css/css Root)))
         (ui-child child)))))
 

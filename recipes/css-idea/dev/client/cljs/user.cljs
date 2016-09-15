@@ -15,7 +15,7 @@
 (devtools/install!)
 
 ; Mount the app and remember it.
-(css/upsert-css "app_style" ui/Root)
+#_(css/upsert-css "app_style" ui/Root)
 (reset! app (core/mount @app ui/Root "app"))
 
 ; use this from REPL to view bits of the application db
