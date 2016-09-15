@@ -52,5 +52,7 @@
   Object
   (render [this]
     (let [{:keys [child ui/react-key]} (om/props this)]
-      (dom/div #js {:key react-key :className (local-class Root)} (ui-child child)))))
+      (dom/div #js {:key react-key :className (local-class Root)}
+        (dom/style nil (g/css (css/css Root)))
+        (ui-child child)))))
 
