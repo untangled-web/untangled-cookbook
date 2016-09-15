@@ -33,6 +33,8 @@
   Object
   (render [this]
     (let [{:keys [id label]} (om/props this)]
+      ; apply-css is a macro that looks for :class in maps and convers a single (or vector of) keywords
+      ; to localized class names and rewrites it as :className. Using $ keeps it from localizing a name.
       (css/apply-css Child
         (dom/p #js {:class [:p :$r]} label)))))
 
