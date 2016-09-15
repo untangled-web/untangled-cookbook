@@ -14,8 +14,9 @@
 (devtools/enable-feature! :sanity-hints)
 (devtools/install!)
 
-; Mount the app and remember it.
+; ALTERNATE WAY TO INJECT STYLE INTO DOM
 #_(css/upsert-css "app_style" ui/Root)
+
 (reset! app (core/mount @app ui/Root "app"))
 
 ; use this from REPL to view bits of the application db

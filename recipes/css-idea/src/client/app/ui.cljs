@@ -52,6 +52,7 @@
   (render [this]
     (let [{:keys [child ui/react-key]} (om/props this)]
       (dom/div #js {:key react-key}
+        ; YOU CAN EMBED THE STYLE RIGHT HERE (See also user.cljs)
         (dom/style nil (g/css (css/css Root)))
         (ui-child child)))))
 
