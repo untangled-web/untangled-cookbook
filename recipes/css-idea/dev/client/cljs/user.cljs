@@ -11,8 +11,10 @@
 (enable-console-print!)
 
 ; Use Chrome...these enable proper formatting of cljs data structures!
-(devtools/enable-feature! :sanity-hints)
-(devtools/install!)
+(defonce tools-installed
+         (do
+           (devtools/enable-feature! :sanity-hints)
+           (devtools/install!)))
 
 ; ALTERNATE WAY TO INJECT STYLE INTO DOM
 #_(css/upsert-css "app_style" ui/Root)
