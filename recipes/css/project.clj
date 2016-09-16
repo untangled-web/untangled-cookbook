@@ -16,6 +16,7 @@
                  [org.clojure/tools.nrepl "0.2.12"]
                  [juxt/dirwatch "0.2.3"]
                  [garden "1.3.2"]
+                 [untangled/om-css "0.0.1-SNAPSHOT"]
                  [com.rpl/specter "0.13.0"]
                  [navis/untangled-client "0.5.5" :exclusions [cljsjs/react org.omcljs/om]]
                  [navis/untangled-server "0.6.0"]
@@ -24,14 +25,14 @@
 
   :plugins [[lein-cljsbuild "1.1.3"]]
 
-  :source-paths ["dev/server" "src/server" "src/shared"]
+  :source-paths ["dev/server"]
   :test-paths ["test/client"]
   :jvm-opts ["-server" "-Xmx1024m" "-Xms512m" "-XX:-OmitStackTraceInFastThrow"]
   :clean-targets ^{:protect false} ["resources/public/js" "target"]
 
   :cljsbuild {:builds
               [{:id           "dev"
-                :source-paths ["src/client" "dev/client" "src/shared"]
+                :source-paths ["src/client" "dev/client"]
                 :figwheel     true
                 :compiler     {:main                 cljs.user
                                :asset-path           "js/compiled/dev"
@@ -43,7 +44,7 @@
                                :recompile-dependents true
                                :source-map-timestamp true}}
                {:id           "test"
-                :source-paths ["test/client" "src/client" "src/shared"]
+                :source-paths ["test/client" "src/client"]
                 :figwheel     true
                 :compiler     {:main                 app.suite
                                :output-to            "resources/public/js/specs/specs.js"

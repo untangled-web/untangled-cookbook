@@ -3,7 +3,7 @@
             [om.next :as om :refer-macros [defui]]
             [untangled.i18n :refer-macros [tr trf]]
             [untangled.client.core :refer [InitialAppState initial-state]]
-            [app.css :as css :refer [css-merge local-class local-kw] :refer-macros [apply-css]]
+            [om-css.core :as css :refer [css-merge local-class local-kw] :refer-macros [localize-classnames]]
             [garden.core :as g]
             [garden.units :refer [px]]
             [garden.stylesheet :as gs]
@@ -35,7 +35,7 @@
     (let [{:keys [id label]} (om/props this)]
       ; apply-css is a macro that looks for :class in maps and convers a single (or vector of) keywords
       ; to localized class names and rewrites it as :className. Using $ keeps it from localizing a name.
-      (css/apply-css Child
+      (css/localize-classnames Child
         (dom/p #js {:class [:p :$r]} label)))))
 
 (def ui-child (om/factory Child))
@@ -55,6 +55,6 @@
     (let [{:keys [child ui/react-key]} (om/props this)]
       (dom/div #js {:key react-key}
         ; YOU CAN EMBED THE STYLE RIGHT HERE (See also user.cljs)
-        (dom/style nil (g/css (css/css Root)))
+        #_(dom/style nil (g/css (css/css Root)))
         (ui-child child)))))
 

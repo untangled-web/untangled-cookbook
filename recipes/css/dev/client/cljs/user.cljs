@@ -5,7 +5,7 @@
     [cljs.pprint :refer [pprint]]
     [devtools.core :as devtools]
     [untangled.client.logging :as log]
-    [app.css :as css]
+    [om-css.core :as css]
     [app.ui :as ui]))
 
 (enable-console-print!)
@@ -17,7 +17,7 @@
            (devtools/install!)))
 
 ; ALTERNATE WAY TO INJECT STYLE INTO DOM
-#_(css/upsert-css "app_style" ui/Root)
+(css/upsert-css "app_style" ui/Root)
 
 (reset! app (core/mount @app ui/Root "app"))
 

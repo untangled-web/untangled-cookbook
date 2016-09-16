@@ -40,13 +40,9 @@ You should now be able to see the app at: http://localhost:8080.
 
 - [Managing lists of data](recipes/lists)
 - [Using InitialAppState protocol to build starting application state](recipes/initial-app-state)
-- Build a multi-use dialog
 - [Create a tabbed interface. Includes how to lazy-load initial tab content](recipes/tabbed-interface)
 - [Using component local state](recipes/component-local-state)
-- Validate forms against the server in real-time
-- Hook up HTML5 routing
-- Update the UI on a time schedule
-- Display multiple views of the same data in two places
+- [Use om-css to create co-located CSS for reusable styled components](recipes/css)
 
 ## Security 
 
@@ -85,4 +81,3 @@ interactions at approximately 00:24:56](https://youtu.be/t49JYB27fv8?t=24m56s)).
 - Interface with SQL on the server
 - Add a Ring handler in front of API processing
 - Add a Ring handler after the processing chain
-- [A way to do component-local auto-updating CSS](recipes/css-idea)
