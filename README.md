@@ -1,6 +1,6 @@
 # Untangled Cookbook
 
-This cookbook is intended to cover use-cases of how to do common tasks for single-page webapps using the
+This cookbook is intended to cover use-cases of how to do common tasks for single-page webapps using the 
 Untangled Web Framework.
 
 The recipes themselves are in the `recipes` subdirectory, and each has a recipe `README.md`. This document
@@ -12,7 +12,7 @@ Each of them is set up for use in IntelliJ, emacs, or vim. They can also be star
 
 # Running Recipes
 
-Each recipe has a project file. You can run them in the environment of your choice. The basic idea is to use a
+Each recipe has a project file. You can run them in the environment of your choice. The basic idea is to use a 
 plain clojure main REPL for figwheel, and any kind of REPL for the server. The servers in the full-stack recipes
 are pre-configured to appear at port 8080. No need to create a config file separately.
 
@@ -44,7 +44,7 @@ You should now be able to see the app at: http://localhost:8080.
 - [Using component local state](recipes/component-local-state)
 - [Use om-css to create co-located CSS for reusable styled components](recipes/css)
 
-## Security
+## Security 
 
 - Server-side security for UI-generated queries
 - Integrate OAuth/OpenID for authentication
@@ -81,6 +81,3 @@ interactions at approximately 00:24:56](https://youtu.be/t49JYB27fv8?t=24m56s)).
 - Interface with SQL on the server
 - Add a Ring handler in front of API processing
 - Add a Ring handler after the processing chain
-
-## Fancy Defui
-- [showcases the new defui macro in untangled client](recipes/fancy-defui)
