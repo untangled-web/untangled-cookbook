@@ -13,6 +13,9 @@
 (defmethod apimutate :default [e k p]
   (timbre/error "Unrecognized mutation " k))
 
+(defmethod api-read :child/by-id [{:keys [ast]} _ _]
+  {:value (throw (ex-info "other read error" {}))})
+
 (defmethod api-read :default [{:keys [ast]} _ _]
   (timbre/error "Unrecognized query " (op/ast->expr ast))
   ;; Bug in untangled server requires the error response bodies for reads to be manually encoded as json, will fix soon

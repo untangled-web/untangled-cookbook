@@ -6,7 +6,9 @@
 (defui ^:once Child
   static om/IQuery
   ;; you can query for the server-error using a link from any component that composes to root
-  (query [_] [[:untangled/server-error '_] :ui/button-disabled])
+  (query [_] [[:untangled/server-error '_] :ui/button-disabled :untangled/read-error])
+  static om/Ident
+  (ident [_ _] [:child/by-id :singleton])
   Object
   (render [this]
     (let [{:keys [untangled/server-error ui/button-disabled]} (om/props this)]
@@ -16,6 +18,8 @@
         (dom/button #js {:onClick  #(om/transact! this '[(my/mutation) (tx/fallback {:action button/disable})])
                          :disabled button-disabled}
           "Click me for error!")
+        (dom/button #js {:onClick  #(df/load-field this :untangled/read-error)}
+                    "Click me for other error!")
         (dom/div nil (str server-error))))))
 
 (def ui-child (om/factory Child))
