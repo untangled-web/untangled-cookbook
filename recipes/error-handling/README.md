@@ -20,10 +20,21 @@ previous one.
 When calling `new-untangled-client`, you can add an error callback that
 will be triggered every time an error is received from the server. So,
 immediately after the global error marker is set, the global error
-callback is triggered. Implement your callback as a function of two
+callback is triggered. Implement your callback as a function of three
 arguments, the first is the global app state atom, the second is the
-error exactly as the server returns it. So, based on the error, you
-can make modifications to your app-state as desired.
+status code and the third one is the error exactly as the server returns
+it.
+
+```
+(untangled.client.core/new-untangled-client
+ ;; this function is called on *every* network error, regardless of cause
+ :network-error-callback
+ (fn [state status-code error]
+    (log/warn "Global callback:" error " with status code: " status-code)))
+```
+
+So, based on the error, you can make modifications to your app-state
+as desired.
 
 Though this cookbook does not have an example of making a custom
 untangled network, you can also add a global error callback to custom
