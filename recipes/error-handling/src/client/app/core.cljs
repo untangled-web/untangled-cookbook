@@ -18,6 +18,5 @@
 
                      ;; this function is called on *every* network error, regardless of cause
                      :network-error-callback
-                     (fn [state error]
-                       (log/warn "Global callback:" error)))))
-
+                     (fn [state status-code error]
+                       (log/warn "Global callback:" error " with status code: " status-code)))))
