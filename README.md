@@ -81,3 +81,4 @@ interactions at approximately 00:24:56](https://youtu.be/t49JYB27fv8?t=24m56s)).
 - Interface with SQL on the server
 - Add a Ring handler in front of API processing
 - Add a Ring handler after the processing chain
+- [showcasing defui mixins](recipes/defui-devtools)
