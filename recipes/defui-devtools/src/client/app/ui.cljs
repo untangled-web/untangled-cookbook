@@ -1,10 +1,10 @@
 (ns app.ui
-  (:require-macros
-    [app.defui :as ui])
   (:require
+    [app.augments :include-macros true]
     [om.dom :as dom]
     [om.next :as om]
-    [untangled.client.core :as uc]))
+    [untangled.client.core :as uc]
+    [untangled.client.ui :as ui :include-macros true]))
 
 (ui/defui Child [:WithBooya :DerefFactory]
   static uc/InitialAppState
@@ -18,7 +18,7 @@
     (let [{:keys [id label]} (om/props this)]
       (dom/p nil label))))
 
-(ui/defui Root [(:WithExclamation "success")]
+(ui/defui Root [(:WithExclamation {:excl "SUCCESS"})]
   static uc/InitialAppState
   (initial-state [cls params]
     {:child (uc/initial-state Child {:label "Constructed Label"})})
