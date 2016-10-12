@@ -3,11 +3,12 @@
             [om.next :as om :refer-macros [defui]]
             [untangled.i18n :refer-macros [tr trf]]
             yahoo.intl-messageformat-with-locales
-            [untangled.client.core :refer [InitialAppState initial-state]]))
+            [untangled.client.core :refer [InitialAppState initial-state]]
+            [untangled.client.data-fetch :as df]))
 
 (defui ^:once SomeSetting
   static om/IQuery
-  (query [this] [:id :value])
+  (query [this] [:ui/fetch-state :id :value])
   static om/Ident
   (ident [this props] [:setting/by-id (:id props)])
   Object
@@ -33,7 +34,7 @@
     (let [{:keys [settings-content settings]} (om/props this)]
       (dom/div nil
         settings-content
-        (map ui-setting settings)))))
+        (df/lazily-loaded (fn [] (map ui-setting settings)) settings)))))
 
 (def ui-settings-tab (om/factory SettingsTab))
 
