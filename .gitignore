@@ -8,3 +8,4 @@ target
 compiled
 .projectile
 *.js
+.nrepl-port

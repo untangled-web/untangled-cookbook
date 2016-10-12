@@ -8,39 +8,36 @@
                  [com.taoensso/timbre "4.3.1"]
                  [commons-codec "1.10"]
                  [org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.8.51"]
-                 [org.omcljs/om "1.0.0-alpha41"]
+                 [org.clojure/clojurescript "1.9.229"]
+                 [org.omcljs/om "1.0.0-alpha46"]
                  [binaryage/devtools "0.5.2"]
-                 [figwheel-sidecar "0.5.3-1" :exclusions [ring/ring-core joda-time org.clojure/tools.reader]]
+                 [figwheel-sidecar "0.5.7" :exclusions [ring/ring-core joda-time org.clojure/tools.reader]]
                  [com.cemerick/piggieback "0.2.1"]
                  [org.clojure/tools.nrepl "0.2.12"]
                  [juxt/dirwatch "0.2.3"]
-                 [navis/untangled-client "0.5.3" :exclusions [cljsjs/react org.omcljs/om]]
-                 [navis/untangled-server "0.4.8"]
-                 [navis/untangled-spec "0.3.6"]
+                 [navis/untangled-client "0.5.8-SNAPSHOT" :exclusions [cljsjs/react org.omcljs/om]]
+                 [navis/untangled-server "0.6.0"]
+                 [navis/untangled-spec "0.3.9"]
                  [navis/untangled-datomic "0.4.9" :exclusions [com.datomic/datomic-free org.clojure/tools.cli]]]
 
-  :plugins [[lein-cljsbuild "1.1.3"]]
+  :plugins [[lein-cljsbuild "1.1.4"]]
 
   :source-paths ["dev/server" "src/server"]
-  :jvm-opts ["-server" "-Xmx1024m" "-Xms512m" "-XX:-OmitStackTraceInFastThrow"]
+  :jvm-opts ["-XX:-OmitStackTraceInFastThrow"]
   :clean-targets ^{:protect false} ["resources/public/js" "target"]
 
   :cljsbuild {:builds
               [{:id           "dev"
                 :source-paths ["src/client" "dev/client"]
                 :figwheel     true
-                :compiler     {:main                 cljs.user
-                               :asset-path           "js/compiled/dev"
-                               :output-to            "resources/public/js/compiled/app.js"
-                               :output-dir           "resources/public/js/compiled/dev"
-                               :optimizations        :none
-                               :parallel-build       false
-                               :verbose              false
-                               :recompile-dependents true
-                               :source-map-timestamp true}}]}
+                :compiler     {:main       cljs.user
+                               :asset-path "js/compiled/dev"
+                               :output-to  "resources/public/js/compiled/app.js"
+                               :output-dir "resources/public/js/compiled/dev"
+                               :verbose    false}}]}
 
-  :figwheel {:css-dirs ["resources/public/css"]}
+  :figwheel {:css-dirs    ["resources/public/css"]
+             :server-port 3450}
 
   :repl-options {:init-ns          user
                  :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]})
