@@ -5,20 +5,35 @@
             yahoo.intl-messageformat-with-locales
             [untangled.client.core :refer [InitialAppState initial-state]]))
 
+(defui ^:once SomeSetting
+  static om/IQuery
+  (query [this] [:id :value])
+  static om/Ident
+  (ident [this props] [:setting/by-id (:id props)])
+  Object
+  (render [this]
+    (let [{:keys [id value]} (om/props this)]
+      (dom/p nil "Setting " id " from server has value: " value))))
+
+(def ui-setting (om/factory SomeSetting {:keyfn :id}))
+
 (defui ^:once SettingsTab
   static InitialAppState
-  (initial-state [clz params] {:id :tab :which-tab :settings :settings-content "Settings Tab"})
+  (initial-state [clz params] {:id               :tab
+                               :which-tab        :settings
+                               :settings-content "Settings Tab"
+                               :settings         []})
   static om/IQuery
   ; This query uses a "link"...a special ident with '_ as the ID. This indicates the item is at the database
   ; root, not inside of the "settings" database object. This is not needed as a matter of course...it is only used
   ; for convenience (since it is trivial to load something into the root of the database)
-  (query [this] [:which-tab :settings-content {[:tab-data-query '_] [:text]}])
+  (query [this] [:which-tab :settings-content {:settings (om/get-query SomeSetting)}])
   Object
   (render [this]
-    (let [{:keys [settings-content tab-data-query]} (om/props this)]
+    (let [{:keys [settings-content settings]} (om/props this)]
       (dom/div nil
         settings-content
-        (dom/p nil (:text tab-data-query))))))
+        (map ui-setting settings)))))
 
 (def ui-settings-tab (om/factory SettingsTab))
 
@@ -56,7 +71,7 @@
     (let [{:keys [which-tab] :as props} (om/props this)]
       (dom/div nil
         (case which-tab
-          :main (ui-main-tab props) ; note props are just passed straight through
+          :main (ui-main-tab props)                         ; note props are just passed straight through
           :settings (ui-settings-tab props)
           (dom/p nil "Missing tab!"))))))
 
@@ -76,8 +91,8 @@
         ; The selection of tabs can be rendered in a child, but the transact! must be done from the parent (to
         ; ensure proper re-render of the tab body). See om/computed for passing callbacks.
         (dom/ul nil
-          (dom/li #js {:onClick #(om/transact! this '[(app/choose-tab {:tab :main})])} "Main")
-          (dom/li #js {:onClick #(om/transact! this '[(app/choose-tab {:tab :settings})
-                                                      ; extra mutation: sample of what you would do to lazy load the tab content
-                                                      (app/lazy-load-tab {:tab :settings})])} "Settings"))
+                (dom/li #js {:onClick #(om/transact! this '[(app/choose-tab {:tab :main})])} "Main")
+                (dom/li #js {:onClick #(om/transact! this '[(app/choose-tab {:tab :settings})
+                                                            ; extra mutation: sample of what you would do to lazy load the tab content
+                                                            (app/lazy-load-tab {:tab :settings})])} "Settings"))
         (ui-tabs current-tab)))))

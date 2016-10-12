@@ -1,7 +1,8 @@
 (ns app.mutations
   (:require [untangled.client.mutations :as m]
             [untangled.client.data-fetch :as df]
-            [om.next :as om]))
+            [om.next :as om]
+            [app.ui :as ui]))
 
 ;; This is all you need to "change tabs"
 (defmethod m/mutate 'app/choose-tab [{:keys [state]} k {:keys [tab]}]
@@ -18,15 +19,17 @@
 ;; this case. See api.clj.
 
 ;; When to consider the data missing? Check the state and find out.
-(defn missing-tab? [state tab] (not (:tab-data-query @state)))
+(defn missing-tab? [state tab] (empty? (-> @state :settings :tab :settings)))
 
 (defmethod m/mutate 'app/lazy-load-tab [{:keys [state] :as env} k {:keys [tab]}]
   (when (missing-tab? state tab)
     ; remote must be the value returned by data-fetch remote-load on your parsing environment.
     {:remote (df/remote-load env)
      :action (fn []
-               ; Specify what you want to load as one or more calls to load-data-action:
-               (df/load-data-action state [:tab-data-query])
+               ; Specify what you want to load as one or more calls to load-action (each call adds an item to load):
+               (df/load-action state :all-settings ui/SomeSetting
+                               {:target  [:settings :tab :settings]
+                                :refresh [:settings]})
                ; anything else you need to do for this transaction
                )}))
 

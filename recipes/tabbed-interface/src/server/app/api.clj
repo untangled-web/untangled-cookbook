@@ -14,5 +14,7 @@
 
 ; This is the only thing we wrote for the server...just return some value so we can
 ; see it really talked to the server for this query.
-(defmethod api-read :tab-data-query [env dispatch-key params]
-  {:value {:text "This is a value from the server"}})
+(defmethod api-read :all-settings [env dispatch-key params]
+  {:value [{:id 1 :value "Gorgon"}
+           {:id 2 :value "Thraser"}
+           {:id 3 :value "Under"}]})
