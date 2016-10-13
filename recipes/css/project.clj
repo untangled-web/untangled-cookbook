@@ -16,7 +16,7 @@
                  [org.clojure/tools.nrepl "0.2.12"]
                  [juxt/dirwatch "0.2.3"]
                  [garden "1.3.2"]
-                 [untangled/om-css "0.0.1-SNAPSHOT"]
+                 [untangled/om-css "1.0.0"]
                  [com.rpl/specter "0.13.0"]
                  [navis/untangled-client "0.5.5" :exclusions [cljsjs/react org.omcljs/om]]
                  [navis/untangled-server "0.6.0"]
