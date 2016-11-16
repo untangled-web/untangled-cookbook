@@ -9,20 +9,20 @@
                  [org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.229"]
                  [org.omcljs/om "1.0.0-alpha46"]
-                 [navis/untangled-client "0.6.0-SNAPSHOT" :exclusions [cljsjs/react org.omcljs/om]]
+                 [navis/untangled-client "0.6.0" :exclusions [cljsjs/react org.omcljs/om]]
                  [navis/untangled-server "0.6.0"]
                  [navis/untangled-spec "0.3.9"]
                  [bidi "2.0.9"]]
 
   :plugins [[lein-cljsbuild "1.1.4"]]
 
-  :source-paths ["dev/server" "src/server" "checkouts/untangled-client/src"]
+  :source-paths ["dev/server" "src/server"]
   :jvm-opts ["-XX:-OmitStackTraceInFastThrow"]
   :clean-targets ^{:protect false} ["resources/public/js" "target"]
 
   :cljsbuild {:builds
               [{:id           "dev"
-                :source-paths ["src/client" "dev/client" "checkouts/untangled-client/src"]
+                :source-paths ["src/client" "dev/client"]
                 :figwheel     true
                 :compiler     {:main       cljs.user
                                :asset-path "js/compiled/dev"

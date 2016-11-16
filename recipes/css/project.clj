@@ -18,7 +18,7 @@
                  [garden "1.3.2"]
                  [untangled/om-css "1.0.0"]
                  [com.rpl/specter "0.13.0"]
-                 [navis/untangled-client "0.5.5" :exclusions [cljsjs/react org.omcljs/om]]
+                 [navis/untangled-client "0.6.0" :exclusions [cljsjs/react org.omcljs/om]]
                  [navis/untangled-server "0.6.0"]
                  [navis/untangled-spec "0.3.7-1"]
                  [navis/untangled-datomic "0.4.9" :exclusions [com.datomic/datomic-free org.clojure/tools.cli]]]
