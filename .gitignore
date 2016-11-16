@@ -1,4 +1,5 @@
 checkouts
+.lein-repl-history
 *.log
 .lein-env
 *.sw?
