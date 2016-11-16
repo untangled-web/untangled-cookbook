@@ -4,23 +4,21 @@
   :license {:name "MIT"
             :url  "https://opensource.org/licenses/MIT"}
 
-  :dependencies [[com.datomic/datomic-free "0.9.5206" :exclusions [joda-time]]
-                 [com.taoensso/timbre "4.3.1"]
-                 [commons-codec "1.10"]
-                 [org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.8.51"]
-                 [org.omcljs/om "1.0.0-alpha41"]
+  :dependencies [[com.taoensso/timbre "4.3.1"]
+                 [org.clojure/clojure "1.9.0-alpha14"]
+                 [org.clojure/clojurescript "1.9.293"]
+                 [org.omcljs/om "1.0.0-alpha47"]
                  [binaryage/devtools "0.5.2"]
-                 [figwheel-sidecar "0.5.3-1" :exclusions [ring/ring-core joda-time org.clojure/tools.reader]]
+                 [figwheel-sidecar "0.5.7"]
                  [com.cemerick/piggieback "0.2.1"]
                  [org.clojure/tools.nrepl "0.2.12"]
-                 [juxt/dirwatch "0.2.3"]
-                 [navis/untangled-client "0.6.0" :exclusions [cljsjs/react org.omcljs/om]]
-                 [navis/untangled-server "0.6.0"]
-                 [navis/untangled-spec "0.3.7-1"]
-                 [navis/untangled-datomic "0.4.9" :exclusions [com.datomic/datomic-free org.clojure/tools.cli]]]
+                 [org.clojure/core.async "0.2.391"]
+                 [navis/untangled-client "0.6.0"]
+                 [navis/untangled-server "0.6.2"]
+                 [bidi "2.0.9"]
+                 [navis/untangled-spec "0.3.9"]]
 
-  :plugins [[lein-cljsbuild "1.1.3"]]
+  :plugins [[lein-cljsbuild "1.1.4"]]
 
   :source-paths ["dev/server" "src/server"]
   :test-paths ["test/client"]
@@ -53,5 +51,4 @@
   :figwheel {:css-dirs ["resources/public/css"]}
 
   :repl-options {:init-ns          user
-                 :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
-  )
+                 :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]})
