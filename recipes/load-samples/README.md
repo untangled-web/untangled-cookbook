@@ -1,7 +1,8 @@
-# Parallel Loading
+# Load Samples
 
-This is a simple app that shows a couple of ways to use the `load` API.
-(available in untangled client 0.6.0)
+This is a simple app that shows a couple of ways to use the `load` API to
+load lists of things from the server, and also refresh them based on idents.
+This API is available in untangled client 0.6.0+.
 
 See `src/client/app/core.cljs` for examples of using load at startup to
 pull in specific targeted items.

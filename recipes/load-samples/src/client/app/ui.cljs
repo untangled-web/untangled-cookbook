@@ -7,8 +7,6 @@
             [untangled.client.data-fetch :as df]))
 
 (defui ^:once Person
-  static InitialAppState
-  (initial-state [c {:keys [id name age]}] {:db/id id :person/name name :person/age-ms age})
   static om/IQuery
   (query [this] [:db/id :person/name :person/age-ms])
   static om/Ident
@@ -18,15 +16,13 @@
     (let [{:keys [db/id person/name person/age-ms] :as props} (om/props this)]
       (dom/li nil
         (str name " (last queried at " age-ms ")")
-        (dom/button #js {:onClick (fn [] (df/load this (om/ident this props) Person))} "Update")))))
+        (dom/button #js {:onClick (fn []
+                                    ; Load relative to an ident (of this component). This will refresh the entity in the db.
+                                    (df/load this (om/ident this props) Person))} "Update")))))
 
 (def ui-person (om/factory Person {:keyfn :db/id}))
 
 (defui ^:once People
-  static InitialAppState
-  (initial-state [c {:keys [kind]}] {:people/kind kind :people [(initial-state Person {:id   (if (= :friends kind) 1 2)
-                                                                                       :name (if (= :friends kind) "Tony" "Jackie")
-                                                                                       :age  2})]})
   static om/IQuery
   (query [this] [:people/kind {:people (om/get-query Person)}])
   static om/Ident
@@ -39,9 +35,6 @@
 (def ui-people (om/factory People {:keyfn :people/kind}))
 
 (defui ^:once Root
-  static InitialAppState
-  (initial-state [c params] {:friends (initial-state People {:kind :friends})
-                             :enemies (initial-state People {:kind :enemies})})
   static om/IQuery
   (query [this] [:ui/react-key
                  {:enemies (om/get-query People)}
