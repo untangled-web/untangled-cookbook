@@ -30,6 +30,10 @@ if the return value is used to manipulate arbitrary state you will have to
 use follow-on (local) reads to get your UI to properly refresh. This is a
 relatively normal thing to need to do, but it is something to keep track of.
 
+The return value of the server-side method must return a map or nil. Normally the only thing
+you'd return in the map is `:tempids`. You may include any additional key-value pairs for
+your client-side merge handler. In the example we're just using `:value`.
+
 ## Running the Recipe. 
 
 See the top-level README. This is a full-stack example.
