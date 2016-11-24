@@ -75,6 +75,6 @@ You should now be able to see the app at: http://localhost:8080.
 - [Server-side security for UI-generated queries](recipes/server-query-security)
 - Create and integrate a custom server component
 - Add a Server Route that generates an image.
-- Interface with SQL on the server
+- [Using SQL on the Server](recipes/sql)
 - Add a Ring handler in front of API processing
 - Add a Ring handler after the processing chain
