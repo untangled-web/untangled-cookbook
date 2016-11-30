@@ -1,5 +1,8 @@
 -- :name all-people :? :*
-SELECT id, name, age, address FROM person;
+SELECT id, name, age FROM person;
 
--- :name get-person :? :1
-select id, name, age, address FROM person WHERE id = :id
+-- :name next-person-id :? :1
+SELECT nextval('person_id_seq') AS id;
+
+-- :name insert-person :! :1
+INSERT INTO person (id, name, age) VALUES (:id, :name, :age);
