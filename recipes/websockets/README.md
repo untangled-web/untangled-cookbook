@@ -1,4 +1,4 @@
-# Websocekts and Server Push
+# Websockets and Server Push
 
 Simple chat app showing how to integrate [untangled-websocekts](https://github.com/untangled-web/untangled-websockets)
 
