@@ -11,7 +11,7 @@
                  [org.clojure/clojurescript "1.9.229"]
                  [org.omcljs/om "1.0.0-alpha45"]
                  [binaryage/devtools "0.5.2"]
-                 [figwheel-sidecar "0.5.5" :exclusions [ring/ring-core joda-time org.clojure/tools.reader]]
+                 [figwheel-sidecar "0.5.9" :exclusions [ring/ring-core joda-time org.clojure/tools.reader]]
                  [com.cemerick/piggieback "0.2.1"]
                  [org.clojure/tools.nrepl "0.2.12"]
                  [juxt/dirwatch "0.2.3"]
