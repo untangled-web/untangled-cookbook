@@ -1,4 +1,4 @@
-(defproject untangled/demo "1.0.0"
+(defproject untangled/css "1.0.0"
   :description "Untangled Cookbook Recipe"
   :url ""
   :license {:name "MIT"
