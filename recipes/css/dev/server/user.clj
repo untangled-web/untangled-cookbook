@@ -1,4 +1,4 @@
-(ns clj.user
+(ns user
   (:require
     [figwheel-sidecar.system :as fig]
     [com.stuartsierra.component :as component]))
