@@ -17,4 +17,4 @@
                      :initial-state initial-state
                      :started-callback (fn [{:keys [reconciler]}]
                                          (df/load-data reconciler [{:app/channels (om/get-query ui/Channel)}] :refresh [:app/channels])
-                                         (df/load-data reconciler [{:app/users (om/get-query ui/User)}]) :refresh [:app/users]))))
+                                         (df/load-data reconciler [{:app/users (om/get-query ui/User)}] :refresh [:app/users])))))
