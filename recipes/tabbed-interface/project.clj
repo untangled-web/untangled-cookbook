@@ -39,7 +39,7 @@
                    :env          {:dev true}
                    :dependencies [[figwheel-sidecar "0.5.9"]
                                   [binaryage/devtools "0.5.2"]
-                                  [figwheel-sidecar "0.5.7" :exclusions [ring/ring-core org.clojure/tools.analyzer.jvm joda-time org.clojure/tools.reader]]
+                                  [figwheel-sidecar "0.5.9" :exclusions [ring/ring-core org.clojure/tools.analyzer.jvm joda-time org.clojure/tools.reader]]
                                   [com.cemerick/piggieback "0.2.1"]
                                   [org.clojure/tools.nrepl "0.2.12"]
                                   [juxt/dirwatch "0.2.3"]]}})
