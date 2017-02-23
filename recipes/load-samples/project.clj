@@ -1,4 +1,4 @@
-(defproject untangled/demo "1.0.0"
+(defproject untangled/load-samples "1.0.0"
   :description "Untangled Cookbook Recipe"
   :url ""
   :license {:name "MIT"
@@ -9,7 +9,7 @@
                  [org.clojure/clojurescript "1.9.293"]
                  [org.omcljs/om "1.0.0-alpha47"]
                  [binaryage/devtools "0.5.2"]
-                 [figwheel-sidecar "0.5.7"]
+                 [figwheel-sidecar "0.5.9"]
                  [com.cemerick/piggieback "0.2.1"]
                  [org.clojure/tools.nrepl "0.2.12"]
                  [org.clojure/core.async "0.2.391"]

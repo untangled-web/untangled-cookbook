@@ -1,4 +1,4 @@
-(defproject untangled/demo "1.0.0"
+(defproject untangled/tabbed-interface "1.0.0"
   :description "Untangled Cookbook Recipe"
   :url ""
   :license {:name "MIT"
@@ -37,7 +37,7 @@
                    :repl-options {:init-ns          clj.user
                                   :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
                    :env          {:dev true}
-                   :dependencies [[figwheel-sidecar "0.5.7"]
+                   :dependencies [[figwheel-sidecar "0.5.9"]
                                   [binaryage/devtools "0.5.2"]
                                   [figwheel-sidecar "0.5.7" :exclusions [ring/ring-core org.clojure/tools.analyzer.jvm joda-time org.clojure/tools.reader]]
                                   [com.cemerick/piggieback "0.2.1"]

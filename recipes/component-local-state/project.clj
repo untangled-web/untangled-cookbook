@@ -1,4 +1,4 @@
-(defproject untangled/demo "1.0.0"
+(defproject untangled/component-local-state "1.0.0"
   :description "Component Local State"
   :url ""
   :license {:name "MIT"
@@ -34,4 +34,4 @@
 
   :profiles {:dev {:dependencies [[binaryage/devtools "0.5.2"]
                                   [org.clojure/tools.namespace "0.2.11"]
-                                  [figwheel-sidecar "0.5.5" :exclusions [ring/ring-core joda-time org.clojure/tools.reader]]]}})
+                                  [figwheel-sidecar "0.5.9" :exclusions [ring/ring-core joda-time org.clojure/tools.reader]]]}})
