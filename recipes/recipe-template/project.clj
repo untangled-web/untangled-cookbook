@@ -6,19 +6,18 @@
 
   :dependencies [[com.taoensso/timbre "4.3.1"]
                  [org.clojure/clojure "1.9.0-alpha14"]
-                 [org.clojure/clojurescript "1.9.293"]
+                 [org.clojure/clojurescript "1.9.473"]
                  [org.omcljs/om "1.0.0-alpha47"]
-                 [binaryage/devtools "0.5.2"]
+                 [binaryage/devtools "0.9.1"]
                  [figwheel-sidecar "0.5.9"]
                  [com.cemerick/piggieback "0.2.1"]
                  [org.clojure/tools.nrepl "0.2.12"]
                  [org.clojure/core.async "0.2.391"]
-                 [navis/untangled-client "0.6.0"]
+                 [navis/untangled-client "0.7.0"]
                  [navis/untangled-server "0.6.2"]
-                 [bidi "2.0.9"]
                  [navis/untangled-spec "0.3.9"]]
 
-  :plugins [[lein-cljsbuild "1.1.4"]]
+  :plugins [[lein-cljsbuild "1.1.5"]]
 
   :source-paths ["dev/server" "src/server"]
   :test-paths ["test/client"]
