@@ -78,3 +78,4 @@ You should now be able to see the app at: http://localhost:8080.
 - [Using SQL on the Server](recipes/sql)
 - Add a Ring handler in front of API processing
 - Add a Ring handler after the processing chain
+- [An example using Untangled UI Forms support to make a step-by-step wizard. Full Stack](recipes/form-wizard)
