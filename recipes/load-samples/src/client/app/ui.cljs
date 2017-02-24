@@ -4,7 +4,8 @@
             [untangled.i18n :refer-macros [tr trf]]
             [untangled.client.core :refer [InitialAppState initial-state]]
             yahoo.intl-messageformat-with-locales
-            [untangled.client.data-fetch :as df]))
+            [untangled.client.data-fetch :as df]
+            [untangled.client.core :as uc]))
 
 (defui ^:once Person
   static om/IQuery
@@ -23,6 +24,8 @@
 (def ui-person (om/factory Person {:keyfn :db/id}))
 
 (defui ^:once People
+  static uc/InitialAppState
+  (initial-state [c {:keys [kind]}] {:people/kind kind})
   static om/IQuery
   (query [this] [:people/kind {:people (om/get-query Person)}])
   static om/Ident
@@ -35,6 +38,9 @@
 (def ui-people (om/factory People {:keyfn :people/kind}))
 
 (defui ^:once Root
+  static uc/InitialAppState
+  (initial-state [c {:keys [kind]}] {:friends (uc/get-initial-state People {:kind :friends})
+                                     :enemies (uc/get-initial-state People {:kind :enemies})})
   static om/IQuery
   (query [this] [:ui/react-key
                  {:enemies (om/get-query People)}
