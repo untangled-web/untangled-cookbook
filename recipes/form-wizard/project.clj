@@ -5,6 +5,8 @@
             :url  "https://opensource.org/licenses/MIT"}
 
   :dependencies [[com.taoensso/timbre "4.3.1"]
+                 [org.hsqldb/hsqldb "2.3.4"]
+                 [org.clojure/java.jdbc "0.7.0-alpha1"]
                  [org.clojure/clojure "1.9.0-alpha14"]
                  [org.clojure/clojurescript "1.9.473"]
                  [org.omcljs/om "1.0.0-alpha47"]
