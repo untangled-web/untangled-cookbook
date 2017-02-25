@@ -4,6 +4,7 @@
             [untangled.i18n :refer-macros [tr trf]]
             [untangled.ui.elements :as e]
             [untangled.ui.forms :as f]
+            [untangled.ui.layout :as layout]
             [untangled.client.core :refer [InitialAppState initial-state]]
             [untangled.client.mutations :as m :refer [defmutation]]
             yahoo.intl-messageformat-with-locales
@@ -61,7 +62,7 @@
   Object
   (render [this]
     (let [{:keys [men women like_shaving beards_sexy]} (om/props this)]
-      (dom/div nil
+      (e/ui-card {:title "Survey Results"}
         (dom/p nil (str "Male responses: " men))
         (dom/p nil (str "Female responses: " women))
         (dom/p nil (str "Men that don't mind shaving: " like_shaving))
@@ -118,6 +119,7 @@
         (if is-last?
           (e/ui-button {:onClick   #(om/transact! this `[(f/commit-to-entity {:form ~form-props :remote true})
                                                          (load-results {})])
+                        :disabled  step-incomplete?
                         :className (str "c-button " (if (not is-last?) "u-fade-out" "u-fade-in"))} "Done!")
           (e/ui-button {:onClick   #(om/transact! this `[(next-slide {:wizard-id ~id})])
                         :disabled  step-incomplete?
@@ -134,10 +136,11 @@
   Object
   (render [this]
     (let [{:keys [ui/react-key wizard final-results]} (om/props this)]
-      (dom/div #js {:key react-key}
-        (if (seq final-results)
-          (ui-results final-results)
-          (ui-wizard wizard))))))
+      (layout/row {:key react-key}
+        (layout/col {:width 6 :push 3}
+          (if (seq final-results)
+            (ui-results final-results)
+            (ui-wizard wizard)))))))
 
 (comment
   ((om/get-query Root) :wizard))
