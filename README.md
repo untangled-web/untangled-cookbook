@@ -22,7 +22,7 @@ are pre-configured to appear at port 8080. No need to create a config file separ
 lein run -m clojure.main script/figwheel.clj
 ```
 
-If the recipe has only a UI, then browse to: http://localhost:3449. If
+If the recipe has only a UI, then browse to: [http://localhost:3449](http://localhost:3449). If
 the recipe is full-stack, continue to the next section.
 
 ## Running the server:
@@ -32,7 +32,7 @@ lein run -m clojure.main
 user> (go)
 ```
 
-You should now be able to see the app at: http://localhost:8080.
+*YOU MUST* use the server URL for full-stack examples: [http://localhost:8080](http://localhost:8080).
 
 # Recipes
 
