@@ -133,15 +133,14 @@
           is-first?        (= step 1)]
       (dom/div nil
         (e/ui-button {:onClick   #(om/transact! this `[(prior-slide {:wizard-id ~id})])
-                      :className (str "c-button " (if is-first? "u-fade-out" "u-fade-in"))} "Back")
+                      :className (if is-first? "u-fade-out" "u-fade-in")} "Back")
         (if is-last?
           (e/ui-button {:onClick   #(om/transact! this `[(f/commit-to-entity {:form ~form-props :remote true})
                                                          (load-results {})])
                         :disabled  step-incomplete?
-                        :className (str "c-button " (if (not is-last?) "u-fade-out" "u-fade-in"))} "Done!")
-          (e/ui-button {:onClick   #(om/transact! this `[(next-slide {:wizard-id ~id})])
-                        :disabled  step-incomplete?
-                        :className (str "c-button")} "Next")))))
+                        :className (if (not is-last?) "u-fade-out" "u-fade-in")} "Done!")
+          (e/ui-button {:onClick  #(om/transact! this `[(next-slide {:wizard-id ~id})])
+                        :disabled step-incomplete?} "Next")))))
   (render [this]
     (let [{:keys [id gender like_shaving beards_sexy
                   wizard/steps wizard/step] :as form-props} (om/props this)
