@@ -9,6 +9,7 @@
     [om.next.impl.parser :as op])
   (:import (clojure.lang IFn)))
 
+; These are just wrappers so you can see incoming server requests
 (defn logging-mutate [env k params]
   (timbre/info "Mutation Request: " k)
   (api/apimutate env k params))
@@ -17,6 +18,7 @@
   (timbre/info "Query: " (op/ast->expr ast))
   (api/api-read env k params))
 
+; This gets called at startup to ensure our database has schema.
 (defn build-schema [db]
   (db (fn [c]
         (jdbc/execute! c [(str "CREATE TABLE IF NOT EXISTS facial_survey ("
@@ -25,7 +27,12 @@
                             "like_shaving boolean,"
                             "beards_sexy boolean)")]))))
 
+; A Stuart S. component for the SQL database (we're using an in-memory db, but feel free to change the URL)
 (defrecord Database [dbspec run-in-transaction]
+  ; By implementing this protocol, our database component can act as a function. We do this as
+  ; a convenience for running transactions in our API. The database itself will be injected into the
+  ; Om env parameter. All we need to do is pull it out and call it like a function. We pass it
+  ; an operation, which is a function that gets a connection and returns a result.
   IFn
   (invoke [this operation]
     (jdbc/with-db-connection [conn dbspec]
@@ -33,7 +40,7 @@
         (operation c))))
   comp/Lifecycle
   (start [this]
-    (let [db {:dbtype         "hsqldb"
+    (let [db {:dbtype         "hsqldb"                      ; clojure jdbc database spec
               :connection-uri "jdbc:hsqldb:mem:resultsdb"
               :user           "SA"
               :password       ""}
@@ -46,5 +53,7 @@
   (core/make-untangled-server
     :config-path "config/recipe.edn"
     :parser (om/parser {:read logging-query :mutate logging-mutate})
-    :parser-injections #{:database}
-    :components {:database (map->Database {})}))
+    ; This is how our database gets in the system:
+    :components {:database (map->Database {})}
+    ; this is how the database component ends up in our Om `env`
+    :parser-injections #{:database}))
