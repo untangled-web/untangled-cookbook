@@ -41,6 +41,13 @@
       (f/form-field component form :gender :choice :male :label "Male")
       (f/form-field component form :gender :choice :female :label "Female"))))
 
+(defn shaving-slide [component form]
+  (dom/div #js {}
+    "Do you like to be clean-shaven?"
+    (dom/div nil
+      (f/form-field component form :like_shaving :choice true :label "As a baby's bottom!")
+      (f/form-field component form :like_shaving :choice false :label "I'm Grizzly Adams"))))
+
 (defn beard-slide [component form]
   (dom/div #js {}
     "Are beards sexy?"
@@ -103,7 +110,7 @@
           1 (intro-slide)
           2 (gender-slide this form-props)
           3 (if male?
-              (dom/div nil "Shaving?")
+              (shaving-slide this form-props)
               (beard-slide this form-props)))
 
         (e/ui-button {:onClick   #(om/transact! this `[(prior-slide {:wizard-id ~id})])
