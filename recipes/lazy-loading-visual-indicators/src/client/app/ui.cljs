@@ -23,9 +23,9 @@
   [{:keys [id]}]
   (action [{:keys [state]}]
     (swap! state (fn [state-map] (-> state-map
-                                   (update-item id set-item-loading true)))
-      (df/load-action state [:items/by-id id] Item {:post-mutation        `mark-item-loaded
-                                                    :post-mutation-params {:id id}})))
+                                   (update-item id set-item-loading true))))
+    (df/load-action state [:items/by-id id] Item {:post-mutation        `mark-item-loaded
+                                                  :post-mutation-params {:id id}}))
   (remote [env] (df/remote-load env)))
 
 (defui ^:once Item
