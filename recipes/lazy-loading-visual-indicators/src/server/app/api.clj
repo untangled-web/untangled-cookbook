@@ -18,3 +18,8 @@
       :panel {:value {:child {:label "Child"}}}
       :child {:value {:items [{:label "A"} {:label "B"}]}}
       nil)))
+
+(defmethod api-read :item [{:keys [ query-root] :as env} _ params]
+  (let [label (second query-root)]
+    (timbre/info "Item query for " label)
+    {:value {:label label}}))

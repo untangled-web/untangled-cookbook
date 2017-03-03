@@ -3,16 +3,30 @@
             [om.next :as om :refer-macros [defui]]
             [untangled.i18n :refer-macros [tr trf]]
             yahoo.intl-messageformat-with-locales
-            [untangled.client.data-fetch :as df]))
+            [untangled.client.data-fetch :as df]
+            [untangled.client.mutations :as m :refer [defmutation]]))
+
+(defmutation item-loaded
+  [{:keys [label]}]
+  (action [{:keys [state]}]
+    (swap! state assoc-in [:item label :ui/refreshing?] false)))
 
 (defui ^:once Item
   static om/IQuery
   ;; The :ui/fetch-state is queried so the parent (Child) lazy load renderer knows what state the load is in
-  (query [this] [:ui/fetch-state :label])
+  (query [this] [:ui/refreshing? :ui/fetch-state :label])
   static om/Ident
   (ident [this props] [:item (:label props)])
   Object
-  (render [this] (dom/p nil (:label (om/props this)))))
+  (render [this]
+    (let [{:keys [label ui/refreshing?]} (om/props this)]
+      (dom/div nil label
+        (if refreshing?
+          "(reloading...)"
+          (dom/button #js {:onClick (fn []
+                                      (m/set-value! this :ui/refreshing? true)
+                                      (df/load this [:item label] Item {:post-mutation        `item-loaded
+                                                                        :post-mutation-params {:label label}}))} "Refresh"))))))
 
 (def ui-item (om/factory Item {:keyfn :label}))
 
@@ -25,11 +39,12 @@
   Object
   (render [this]
     (let [{:keys [label items]} (om/props this)
-          render-list (fn [items] (mapv ui-item items))]
+          render-item (fn [idx i] (df/lazily-loaded ui-item i))
+          render-list (fn [items] (map-indexed render-item items))]
       (dom/div nil
-               (dom/p nil label)
-               (df/lazily-loaded render-list items
-                                 :not-present-render (fn [items] (dom/button #js {:onClick #(df/load-field this :items)} "Load Items")))))))
+        (dom/p nil label)
+        (df/lazily-loaded render-list items
+          :not-present-render (fn [items] (dom/button #js {:onClick #(df/load-field this :items)} "Load Items")))))))
 
 (def ui-child (om/factory Child))
 
@@ -42,9 +57,9 @@
   (render [this]
     (let [{:keys [ui/loading-data child] :as props} (om/props this)]
       (dom/div nil
-               (dom/div #js {:style #js {:float "right" :display (if loading-data "block" "none")}} "GLOBAL LOADING")
-               (df/lazily-loaded ui-child child
-                                 :not-present-render (fn [_] (dom/button #js {:onClick #(df/load-field this :child)} "Load Child")))))))
+        (dom/div #js {:style #js {:float "right" :display (if loading-data "block" "none")}} "GLOBAL LOADING")
+        (df/lazily-loaded ui-child child
+          :not-present-render (fn [_] (dom/button #js {:onClick #(df/load-field this :child)} "Load Child")))))))
 
 (def ui-panel (om/factory Panel))
 
