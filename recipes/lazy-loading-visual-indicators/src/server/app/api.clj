@@ -15,11 +15,11 @@
 (defmethod api-read :ui [{:keys [ast query] :as env} dispatch-key params]
   (let [component (second (:key ast))]
     (case component
-      :panel {:value {:child {:label "Child"}}}
-      :child {:value {:items [{:label "A"} {:label "B"}]}}
+      :panel {:value {:child {:db/id 5 :child/label "Child"}}}
+      :child {:value {:items [{:db/id 1 :item/label "A"} {:db/id 2 :item/label "B"}]}}
       nil)))
 
-(defmethod api-read :item [{:keys [ query-root] :as env} _ params]
-  (let [label (second query-root)]
-    (timbre/info "Item query for " label)
-    {:value {:label label}}))
+(defmethod api-read :items/by-id [{:keys [ query-root] :as env} _ params]
+  (let [id (second query-root)]
+    (timbre/info "Item query for " id)
+    {:value {:db/id id :item/label (str "Refreshed Label " (rand-int 100))}}))

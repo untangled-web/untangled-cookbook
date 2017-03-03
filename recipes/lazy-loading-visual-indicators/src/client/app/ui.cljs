@@ -6,29 +6,43 @@
             [untangled.client.data-fetch :as df]
             [untangled.client.mutations :as m :refer [defmutation]]))
 
-(defmutation item-loaded
-  [{:keys [label]}]
+(declare Item)
+
+(defn set-item-loading [item loading?]
+  (assoc item :ui/refreshing? loading?))
+
+(defn update-item [state-map item-id f & args]
+  (apply update-in state-map [:items/by-id item-id] f args))
+
+(defmutation mark-item-loaded
+  [{:keys [id]}]
   (action [{:keys [state]}]
-    (swap! state assoc-in [:item label :ui/refreshing?] false)))
+    (swap! state update-item id set-item-loading false)))
+
+(defmutation refresh-item
+  [{:keys [id]}]
+  (action [{:keys [state]}]
+    (swap! state (fn [state-map] (-> state-map
+                                   (update-item id set-item-loading true)))
+      (df/load-action state [:items/by-id id] Item {:post-mutation        `mark-item-loaded
+                                                    :post-mutation-params {:id id}})))
+  (remote [env] (df/remote-load env)))
 
 (defui ^:once Item
   static om/IQuery
-  ;; The :ui/fetch-state is queried so the parent (Child) lazy load renderer knows what state the load is in
-  (query [this] [:ui/refreshing? :ui/fetch-state :label])
+  ;; The :ui/fetch-state is queried so the parent (Child in this case) lazy load renderer knows what state the load is in
+  (query [this] [:db/id :item/label :ui/refreshing? :ui/fetch-state])
   static om/Ident
-  (ident [this props] [:item (:label props)])
+  (ident [this props] [:items/by-id (:db/id props)])
   Object
   (render [this]
-    (let [{:keys [label ui/refreshing?]} (om/props this)]
+    (let [{:keys [db/id item/label ui/refreshing?]} (om/props this)]
       (dom/div nil label
         (if refreshing?
           "(reloading...)"
-          (dom/button #js {:onClick (fn []
-                                      (m/set-value! this :ui/refreshing? true)
-                                      (df/load this [:item label] Item {:post-mutation        `item-loaded
-                                                                        :post-mutation-params {:label label}}))} "Refresh"))))))
+          (dom/button #js {:onClick #(om/transact! this `[(refresh-item {:id ~id})])} "Refresh"))))))
 
-(def ui-item (om/factory Item {:keyfn :label}))
+(def ui-item (om/factory Item {:keyfn :db/id}))
 
 (defui ^:once Child
   static om/IQuery
