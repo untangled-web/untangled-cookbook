@@ -12,7 +12,7 @@
                  [figwheel-sidecar "0.5.9" :exclusions [ring/ring-core joda-time org.clojure/tools.reader]]
                  [com.cemerick/piggieback "0.2.1"]
                  [org.clojure/tools.nrepl "0.2.12"]
-                 [navis/untangled-client "0.8.0-SNAPSHOT"]
+                 [navis/untangled-client "0.8.0"]
                  [navis/untangled-server "0.6.1"]
                  [navis/untangled-spec "0.3.9"]]
 

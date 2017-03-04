@@ -19,7 +19,7 @@
       :child {:value {:items [{:db/id 1 :item/label "A"} {:db/id 2 :item/label "B"}]}}
       nil)))
 
-(defmethod api-read :items/by-id [{:keys [ query-root] :as env} _ params]
+(defmethod api-read :items/by-id [{:keys [query-root] :as env} _ params]
   (let [id (second query-root)]
     (timbre/info "Item query for " id)
     {:value {:db/id id :item/label (str "Refreshed Label " (rand-int 100))}}))
