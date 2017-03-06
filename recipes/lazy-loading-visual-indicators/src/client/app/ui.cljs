@@ -19,15 +19,6 @@
   (action [{:keys [state]}]
     (swap! state update-item id set-item-loading false)))
 
-(defmutation refresh-item
-  [{:keys [id]}]
-  (action [{:keys [state]}]
-    (swap! state (fn [state-map] (-> state-map
-                                   (update-item id set-item-loading true))))
-    (df/load-action state [:items/by-id id] Item {:post-mutation        `mark-item-loaded
-                                                  :post-mutation-params {:id id}}))
-  (remote [env] (df/remote-load env)))
-
 (defui ^:once Item
   static om/IQuery
   ;; The :ui/fetch-state is queried so the parent (Child in this case) lazy load renderer knows what state the load is in
@@ -36,11 +27,11 @@
   (ident [this props] [:items/by-id (:db/id props)])
   Object
   (render [this]
-    (let [{:keys [db/id item/label ui/refreshing?]} (om/props this)]
+    (let [{:keys [db/id item/label ui/refreshing?] :as props} (om/props this)]
       (dom/div nil label
         (if refreshing?
           "(reloading...)"
-          (dom/button #js {:onClick #(om/transact! this `[(refresh-item {:id ~id})])} "Refresh"))))))
+          (dom/button #js {:onClick #(df/refresh! this)} "Refresh"))))))
 
 (def ui-item (om/factory Item {:keyfn :db/id}))
 
@@ -52,7 +43,7 @@
   (ident [this props] [:ui :child])
   Object
   (render [this]
-    (let [{:keys [label items]} (om/props this)
+    (let [{:keys [label items] :as props} (om/props this)
           render-item (fn [idx i] (df/lazily-loaded ui-item i))
           render-list (fn [items] (map-indexed render-item items))]
       (dom/div nil
