@@ -79,7 +79,7 @@
 
 ; A mutation that triggers a remote load of some range of cache items
 (defmethod m/mutate 'fill-cache [{:keys [state] :as env} k p]
-  (let [start (-> @state :list-cache count inc)
+  (let [start (-> @state :list-cache count)
         pg (-> @state :current-page :page-size)
         end (-> @state :current-page :start (+ pg))]
     (when (> end start)
