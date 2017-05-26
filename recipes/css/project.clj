@@ -1,32 +1,24 @@
-(defproject untangled/css "1.0.0"
+(defproject untangled/demo "1.0.0"
   :description "Untangled Cookbook Recipe"
   :url ""
   :license {:name "MIT"
             :url  "https://opensource.org/licenses/MIT"}
 
-  :dependencies [[com.datomic/datomic-free "0.9.5206" :exclusions [joda-time]]
-                 [com.taoensso/timbre "4.3.1"]
-                 [commons-codec "1.10"]
-                 [org.clojure/clojure "1.8.0"]
+  :dependencies [[org.clojure/clojure "1.9.0-alpha14"]
                  [org.clojure/clojurescript "1.9.229"]
-                 [org.omcljs/om "1.0.0-alpha45"]
-                 [binaryage/devtools "0.5.2"]
-                 [figwheel-sidecar "0.5.9" :exclusions [ring/ring-core joda-time org.clojure/tools.reader]]
+                 [org.omcljs/om "1.0.0-alpha48"]
+                 [binaryage/devtools "0.9.4"]
+                 [figwheel-sidecar "0.5.9"]
                  [com.cemerick/piggieback "0.2.1"]
                  [org.clojure/tools.nrepl "0.2.12"]
-                 [juxt/dirwatch "0.2.3"]
+                 [org.clojure/tools.namespace "0.2.11"]
                  [garden "1.3.2"]
-                 [untangled/om-css "1.0.0"]
-                 [com.rpl/specter "0.13.0"]
-                 [navis/untangled-client "0.6.0" :exclusions [cljsjs/react org.omcljs/om]]
-                 [navis/untangled-server "0.6.0"]
-                 [navis/untangled-spec "0.3.7-1"]
-                 [navis/untangled-datomic "0.4.9" :exclusions [com.datomic/datomic-free org.clojure/tools.cli]]]
+                 [untangled/om-css "1.0.2"]
+                 [navis/untangled-client "0.6.0" :exclusions [cljsjs/react org.omcljs/om]]]
 
-  :plugins [[lein-cljsbuild "1.1.3"]]
+  :plugins [[lein-cljsbuild "1.1.5"]]
 
-  :source-paths ["dev/server"]
-  :test-paths ["test/client"]
+  :source-paths ["src/client"]
   :jvm-opts ["-server" "-Xmx1024m" "-Xms512m" "-XX:-OmitStackTraceInFastThrow"]
   :clean-targets ^{:protect false} ["resources/public/js" "target"]
 
@@ -43,18 +35,18 @@
                                :verbose              false
                                :recompile-dependents true
                                :source-map-timestamp true}}
-               {:id           "test"
-                :source-paths ["test/client" "src/client"]
-                :figwheel     true
-                :compiler     {:main                 app.suite
-                               :output-to            "resources/public/js/specs/specs.js"
-                               :output-dir           "resources/public/js/compiled/specs"
-                               :asset-path           "js/compiled/specs"
-                               :recompile-dependents true
-                               :optimizations        :none}}]}
+               {:id           "release"
+                :source-paths ["src/client"]
+                :compiler     {:main          app.main
+                               :output-to     "resources/public/js/release.js"
+                               :output-dir    "resources/public/js/release"
+                               :asset-path    "js/release"
+                               :optimizations :advanced}}]}
 
   :figwheel {:css-dirs ["resources/public/css"]}
 
   :repl-options {:init-ns          user
                  :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
+
+  :profiles {:dev {:source-paths ["dev/server" "src/client"]}}
   )
